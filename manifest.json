@@ -1,0 +1,22 @@
+{
+  "name": "Tie & Style",
+  "short_name": "Tie & Style",
+  "description": "Handmade with love in India. Ties, Bow Ties, Pocket Squares & Cufflinks.",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#f8f6f8",
+  "theme_color": "#df20df",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

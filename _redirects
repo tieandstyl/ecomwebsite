@@ -1,0 +1,34 @@
+# Cloudflare Pages routing configuration
+
+# Static assets - serve as-is
+/js/*  /js/:splat  200
+/data/*  /data/:splat  200
+/image/*  /image/:splat  200
+/video/*  /video/:splat  200
+/assets/*  /assets/:splat  200
+/ui/*  /ui/:splat  200
+
+# HTML files with .html extension - redirect to clean URLs
+/index.html  /  301!
+/cart.html  /cart  301!
+/categories.html  /categories  301!
+/category.html  /category  301!
+/product.html  /product  301!
+/profile.html  /profile  301!
+/checkout.html  /checkout  301!
+/track-order.html  /track-order  301!
+/admin.html  /admin  301!
+
+# Clean URLs - serve the corresponding HTML files
+/  /index.html  200
+/cart  /cart.html  200
+/categories  /categories.html  200
+/category  /category.html  200
+/product  /product.html  200
+/profile  /profile.html  200
+/checkout  /checkout.html  200
+/track-order  /track-order.html  200
+/admin  /admin.html  200
+
+# Fallback - everything else goes to index
+/*  /index.html  200

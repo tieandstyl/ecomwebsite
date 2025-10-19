@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store Settings - Tie-Style Admin</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    {% include 'includes/_navbar.html' %}
+    
+    <div class="container">
+        <header class="page-header">
+            <h2>⚙️ Store Settings</h2>
+            <p>Configure your store information</p>
+        </header>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST" enctype="multipart/form-data" class="form-container">
+            <div class="form-grid">
+                <!-- Basic Information -->
+                <div class="form-section">
+                    <h3>Basic Information</h3>
+                    
+                    <div class="form-group">
+                        <label for="name">Store Name *</label>
+                        <input type="text" 
+                               id="name" 
+                               name="name" 
+                               value="{{ store.name }}"
+                               required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="handle">Store Handle</label>
+                        <input type="text" 
+                               id="handle" 
+                               name="handle" 
+                               value="{{ store.handle }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea id="description" 
+                                  name="description" 
+                                  rows="3">{{ store.description }}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="logo">Store Logo</label>
+                        {% if store.logo %}
+                            <div class="current-image">
+                                <img src="{{ url_for('static', filename='../' + store.logo) }}" 
+                                     alt="Store Logo"
+                                     style="max-width: 150px;">
+                            </div>
+                        {% endif %}
+                        <input type="file" id="logo" name="logo" accept="image/*">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="banner">Store Banner</label>
+                        {% if store.bannerImage %}
+                            <div class="current-image">
+                                <img src="{{ url_for('static', filename='../' + store.bannerImage) }}" 
+                                     alt="Store Banner"
+                                     style="max-width: 300px;">
+                            </div>
+                        {% endif %}
+                        <input type="file" id="banner" name="banner" accept="image/*">
+                    </div>
+                </div>
+
+                <!-- Contact Information -->
+                <div class="form-section">
+                    <h3>Contact Information</h3>
+                    
+                    <div class="form-group">
+                        <label for="phone">Phone (E.164 format)</label>
+                        <input type="tel" 
+                               id="phone" 
+                               name="phone" 
+                               value="{{ store.contact.phoneE164 }}"
+                               placeholder="+918110960489">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" 
+                               id="email" 
+                               name="email" 
+                               value="{{ store.contact.email }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <textarea id="address" 
+                                  name="address" 
+                                  rows="3">{{ store.contact.address }}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="instagram">Instagram URL</label>
+                        <input type="url" 
+                               id="instagram" 
+                               name="instagram" 
+                               value="{{ store.social.instagram }}">
+                    </div>
+                </div>
+
+                <!-- Payment Settings -->
+                <div class="form-section">
+                    <h3>Payment Settings</h3>
+                    
+                    <div class="form-group">
+                        <label for="gpayUpiId">GPay UPI ID</label>
+                        <input type="text" 
+                               id="gpayUpiId" 
+                               name="gpayUpiId" 
+                               value="{{ store.payments.gpayUpiId }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="payment_instructions">Payment Instructions</label>
+                        <textarea id="payment_instructions" 
+                                  name="payment_instructions" 
+                                  rows="3">{{ store.payments.instructions }}</textarea>
+                    </div>
+                </div>
+
+                <!-- Delivery Settings -->
+                <div class="form-section">
+                    <h3>Delivery Settings</h3>
+                    
+                    <div class="form-group">
+                        <label for="delivery_areas">Delivery Areas</label>
+                        <input type="text" 
+                               id="delivery_areas" 
+                               name="delivery_areas" 
+                               value="{{ store.delivery.areas | join(', ') }}"
+                               placeholder="Chennai, Bengaluru">
+                        <small>Comma-separated list of cities/areas</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="shipping_policy">Shipping Policy</label>
+                        <textarea id="shipping_policy" 
+                                  name="shipping_policy" 
+                                  rows="2">{{ store.delivery.shippingPolicy }}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="returns_policy">Returns Policy</label>
+                        <textarea id="returns_policy" 
+                                  name="returns_policy" 
+                                  rows="2">{{ store.delivery.returnsPolicy }}</textarea>
+                    </div>
+                </div>
+
+                <!-- Pricing Settings -->
+                <div class="form-section">
+                    <h3>Pricing Settings</h3>
+                    
+                    <div class="form-group">
+                        <label for="tax_rate">Tax Rate (%)</label>
+                        <input type="number" 
+                               id="tax_rate" 
+                               name="tax_rate" 
+                               value="{{ store.pricing.taxRatePct }}"
+                               step="0.1"
+                               min="0">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="free_shipping_min">Free Shipping Minimum (₹)</label>
+                        <input type="number" 
+                               id="free_shipping_min" 
+                               name="free_shipping_min" 
+                               value="{{ store.pricing.freeShippingMin }}"
+                               step="1"
+                               min="0">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="shipping_flat">Flat Shipping Rate (₹)</label>
+                        <input type="number" 
+                               id="shipping_flat" 
+                               name="shipping_flat" 
+                               value="{{ store.pricing.shippingFlat }}"
+                               step="1"
+                               min="0">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <span class="icon">💾</span> Save Settings
+                </button>
+            </div>
+        </form>
+    </div>
+
+    {% include 'includes/_footer.html' %}
+</body>
+</html>

@@ -1,0 +1,264 @@
+# ✅ FEATURE ADDED: Send Payment Link via WhatsApp
+
+## What Was Added
+
+### 📱 Send Payment Link Button in Admin Panel
+
+**Location:** Admin Dashboard → Orders → Click "View" on any order
+
+## Screenshot Flow
+
+```
+┌────────────────────────────────────────────────────┐
+│  Admin Panel - Order Details Modal                 │
+├────────────────────────────────────────────────────┤
+│                                                    │
+│  📋 Order Info                                     │
+│  Order ID: ORD-1729234567890                       │
+│  Date: Oct 18, 2025                                │
+│  Status: [Pending] [Processing] [Completed]        │
+│                                                    │
+│  👤 Customer Details                               │
+│  Name: John Doe                                    │
+│  Phone: +918110960489                              │
+│  Address: 123 Street, Chennai                      │
+│                                                    │
+│  🛒 Order Items                                    │
+│  - Scrunchie (Qty: 2) - ₹300.00                   │
+│  - Bow Clip (Qty: 1) - ₹150.00                    │
+│                                                    │
+│  💰 Payment Summary                                │
+│  Subtotal: ₹450.00                                 │
+│  Shipping: ₹50.00                                  │
+│  Total: ₹500.00                                    │
+│                                                    │
+│  🔄 Update Order Status                            │
+│  [⏳ Pending] [🔄 Processing] [✅ Completed]        │
+│                                                    │
+│  💳 Update Payment Status                          │
+│  [💳 Pending] [✅ Confirmed] [❌ Failed]            │
+│                                                    │
+│  📱 Send Payment Link via WhatsApp    ⭐ NEW       │
+│  ┌──────────────────────────────────────────────┐ │
+│  │ Send UPI payment link to customer's WhatsApp │ │
+│  │                                              │ │
+│  │  ┌────────────────────────────────────────┐ │ │
+│  │  │ 📱 Send Payment Link (₹500.00)        │ │ │
+│  │  │        [Green Button]                  │ │ │
+│  │  └────────────────────────────────────────┘ │ │
+│  └──────────────────────────────────────────────┘ │
+└────────────────────────────────────────────────────┘
+```
+
+## What Happens When You Click
+
+### Step 1: Admin Clicks Button
+```
+Admin Panel Order View
+         ↓
+   [Click Button]
+         ↓
+  Fetches store.json
+         ↓
+   Gets UPI ID: myshop@okaxis
+         ↓
+Creates UPI payment link
+         ↓
+  Opens WhatsApp Web
+```
+
+### Step 2: WhatsApp Opens
+```
+WhatsApp Web/App Opens
+         ↓
+To: +918110960489 (Customer's number)
+         ↓
+Message Pre-filled:
+┌─────────────────────────────────────┐
+│ Hi! 👋 Thank you for your order!    │
+│                                     │
+│ 📦 Order ID: ORD-1729234567890      │
+│ 💰 Amount: ₹500.00                  │
+│                                     │
+│ Please complete your payment using  │
+│ this UPI link:                      │
+│ upi://pay?pa=myshop@okaxis&...      │
+│                                     │
+│ Or pay to:                          │
+│ 💳 UPI ID: myshop@okaxis            │
+│                                     │
+│ After payment, please share the     │
+│ UTR number/screenshot here.         │
+│                                     │
+│ Thank you! 🙏                        │
+└─────────────────────────────────────┘
+         ↓
+   [Send Message]
+```
+
+### Step 3: Customer Receives & Pays
+```
+Customer's WhatsApp
+         ↓
+Receives message with link
+         ↓
+Clicks UPI link
+         ↓
+Payment app opens (GPay/PhonePe/Paytm)
+         ↓
+Pre-filled:
+- To: myshop@okaxis (Tie-Style)
+- Amount: ₹500.00
+- Note: Payment for Order ORD-1729234567890
+         ↓
+Customer confirms payment
+         ↓
+Sends UTR/screenshot to admin
+```
+
+## Configuration
+
+### Current Settings (store.json)
+```json
+{
+  "name": "Tie-Style",
+  "payments": {
+    "gpayUpiId": "myshop@okaxis"
+  }
+}
+```
+
+### To Change UPI ID:
+**Option 1: Admin Panel**
+1. Go to: http://localhost:5000/store-settings
+2. Find "Payment Settings"
+3. Update "GPay UPI ID"
+4. Click "Save"
+
+**Option 2: Edit JSON**
+Edit `data/store.json`:
+```json
+"payments": {
+  "gpayUpiId": "your-new-upi@bank"
+}
+```
+
+## Button Design
+
+**Color:** Green (#10b981) - WhatsApp brand color  
+**Size:** Full width  
+**Icon:** WhatsApp logo  
+**Text:** "Send Payment Link (₹XXX.XX)"  
+**Hover:** Darker green  
+
+## Message Template
+
+```
+Hi! 👋 Thank you for your order!
+
+📦 Order ID: {orderId}
+💰 Amount: ₹{amount}
+
+Please complete your payment using this UPI link:
+{upiLink}
+
+Or pay to:
+💳 UPI ID: {upiId}
+
+After payment, please share the UTR number/screenshot here.
+
+Thank you! 🙏
+```
+
+## UPI Link Breakdown
+
+```
+upi://pay?
+  pa=myshop@okaxis              ← UPI ID (from store.json)
+  &pn=Tie-Style                 ← Store Name (from store.json)
+  &tn=Payment for Order ORD-123 ← Transaction Note (with Order ID)
+  &am=500.00                    ← Amount (order total)
+  &cu=INR                       ← Currency (Indian Rupees)
+```
+
+## Real Example
+
+**Order Details:**
+- Order ID: ORD-1729234567890
+- Customer: Ramesh Kumar
+- Phone: +918110960489
+- Amount: ₹1,200.00
+- UPI ID: myshop@okaxis (from store.json)
+
+**Generated UPI Link:**
+```
+upi://pay?pa=myshop@okaxis&pn=Tie-Style&tn=Payment%20for%20Order%20ORD-1729234567890&am=1200.00&cu=INR
+```
+
+**WhatsApp Message:**
+```
+Hi! 👋 Thank you for your order!
+
+📦 Order ID: ORD-1729234567890
+💰 Amount: ₹1,200.00
+
+Please complete your payment using this UPI link:
+upi://pay?pa=myshop@okaxis&pn=Tie-Style&tn=Payment%20for%20Order%20ORD-1729234567890&am=1200.00&cu=INR
+
+Or pay to:
+💳 UPI ID: myshop@okaxis
+
+After payment, please share the UTR number/screenshot here.
+
+Thank you! 🙏
+```
+
+## Benefits
+
+✅ **One-Click Operation** - Send payment link in seconds  
+✅ **No Manual Entry** - Amount and UPI pre-filled  
+✅ **Direct UPI Link** - Opens payment app directly  
+✅ **Professional** - Consistent, branded messaging  
+✅ **Reduces Errors** - No typing mistakes  
+✅ **Faster Payments** - Customer just clicks and pays  
+✅ **Easy Tracking** - UTR numbers for verification  
+✅ **Uses Store Settings** - Always current UPI ID  
+
+## Common Use Cases
+
+### 1. New Order Placed
+```
+Customer places order → Admin views order → Sends payment link
+```
+
+### 2. Payment Reminder
+```
+Pending payment → Admin checks order → Resends payment link
+```
+
+### 3. Failed Payment Retry
+```
+Payment failed → Admin updates status → Sends new link
+```
+
+## Files Modified
+
+✅ `js/admin.js` - Added sendPaymentLink() function  
+✅ `js/admin.js` - Updated renderOrderDetails() modal  
+
+## Testing
+
+**Test Scenarios:**
+1. ✅ Click button with valid order
+2. ✅ WhatsApp opens with correct message
+3. ✅ UPI link contains correct amount
+4. ✅ UPI link contains correct UPI ID from store.json
+5. ✅ Phone number formats correctly
+6. ✅ Works with +91, without +91, with spaces
+7. ✅ Fallback UPI ID if store.json fails
+
+---
+
+**Status**: ✅ Complete and Ready to Use  
+**Location**: Admin Panel → Orders → View Order → Send Payment Link Button  
+**Date**: October 18, 2025

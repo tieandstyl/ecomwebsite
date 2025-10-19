@@ -1,0 +1,50 @@
+{
+  "id": "store-001",
+  "name": "Tie-Style",
+  "handle": "Tie-Style",
+  "description": "Handpicked products delivered to your door.",
+  "logo": "image/navlogo.png",
+  "bannerImage": "image/banner.png",
+  "catalogVersion": "2025-10-14-01",
+  "contact": {
+    "phoneE164": "+918110960489",
+    "email": "santhoshsharuk16@gmail.com",
+    "address": "123 Market Street, Chennai, IN"
+  },
+  "payments": {
+    "gpayUpiId": "myshop@okaxis",
+    "gpayQrImage": "assets/gpay-qr.png",
+    "instructions": "Pay via GPay UPI or scan the QR. Share the UTR and screenshot on WhatsApp."
+  },
+  "delivery": {
+    "areas": [
+      "Chennai",
+      "Bengaluru"
+    ],
+    "shippingPolicy": "Free delivery above ₹999. Standard delivery 2–5 days.",
+    "returnsPolicy": "7-day return on unused items with original packaging."
+  },
+  "businessHours": {
+    "timezone": "Asia/Kolkata",
+    "hours": [
+      {
+        "day": "Mon-Fri",
+        "open": "10:00",
+        "close": "19:00"
+      },
+      {
+        "day": "Sat",
+        "open": "11:00",
+        "close": "17:00"
+      }
+    ]
+  },
+  "social": {
+    "instagram": "https://www.instagram.com/_tie_style_/"
+  },
+  "pricing": {
+    "taxRatePct": 0.0,
+    "freeShippingMin": 999.0,
+    "shippingFlat": 60.0
+  }
+}

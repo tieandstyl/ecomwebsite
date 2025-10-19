@@ -1,0 +1,6 @@
+{
+  "note": "This file has been removed - PWA functionality disabled",
+  "description": "The app no longer uses a manifest.json file",
+  "storage": "LocalStorage only",
+  "message": "You can safely delete this file"
+}

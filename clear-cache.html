@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clearing Cache...</title>
+<style>
+  body {
+    font-family: system-ui, -apple-system, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+  }
+  .container {
+    text-align: center;
+    padding: 2rem;
+  }
+  .spinner {
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top: 4px solid white;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin: 2rem auto;
+  }
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  .log {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    text-align: left;
+    font-size: 14px;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  .log-item {
+    padding: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>🧹 Clearing Old Cache</h1>
+  <div class="spinner"></div>
+  <p id="status">Checking for service workers...</p>
+  <div class="log" id="log"></div>
+</div>
+
+<script>
+const statusEl = document.getElementById('status');
+const logEl = document.getElementById('log');
+
+function log(message) {
+  console.log(message);
+  const item = document.createElement('div');
+  item.className = 'log-item';
+  item.textContent = message;
+  logEl.appendChild(item);
+  logEl.scrollTop = logEl.scrollHeight;
+}
+
+async function clearEverything() {
+  try {
+    log('🔍 Checking service workers...');
+    
+    if ('serviceWorker' in navigator) {
+      const registrations = await navigator.serviceWorker.getRegistrations();
+      log(`Found ${registrations.length} service worker(s)`);
+      
+      for (let registration of registrations) {
+        await registration.unregister();
+        log('✅ Unregistered service worker');
+      }
+    } else {
+      log('ℹ️ Service Workers not supported');
+    }
+
+    log('🗑️ Clearing caches...');
+    if ('caches' in window) {
+      const cacheNames = await caches.keys();
+      log(`Found ${cacheNames.length} cache(s)`);
+      
+      for (let name of cacheNames) {
+        await caches.delete(name);
+        log(`✅ Deleted cache: ${name}`);
+      }
+    }
+
+    log('✨ All clear! Redirecting...');
+    statusEl.textContent = 'Cache cleared! Redirecting...';
+    
+    // Redirect to home after 2 seconds
+    setTimeout(() => {
+      window.location.href = '/';
+    }, 2000);
+
+  } catch (error) {
+    log('❌ Error: ' + error.message);
+    statusEl.textContent = 'Error occurred. Redirecting anyway...';
+    setTimeout(() => {
+      window.location.href = '/';
+    }, 3000);
+  }
+}
+
+clearEverything();
+</script>
+</body>
+</html>

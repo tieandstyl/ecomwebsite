@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Track Your Order - My Shop</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#df20df",
+                    "background-light": "#f8f6f8",
+                    "background-dark": "#211121",
+                },
+                fontFamily: {
+                    "display": ["Plus Jakarta Sans", "sans-serif"]
+                }
+            },
+        },
+    }
+</script>
+<style>
+/* Mobile Bottom Navigation */
+.mobile-bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  border-top: 1px solid rgba(223, 32, 223, 0.2);
+  padding: 0.5rem 0;
+  z-index: 50;
+  box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.dark .mobile-bottom-nav {
+  background: #211121;
+  border-top-color: rgba(223, 32, 223, 0.3);
+}
+
+.mobile-bottom-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  padding: 0.5rem;
+  color: #6b7280;
+  transition: all 0.2s;
+  position: relative;
+  text-decoration: none;
+}
+
+.mobile-bottom-nav-item.active {
+  color: #df20df;
+}
+
+.mobile-bottom-nav-item svg {
+  width: 24px;
+  height: 24px;
+}
+
+.mobile-bottom-nav-item span {
+  font-size: 0.625rem;
+  font-weight: 500;
+}
+
+@media (max-width: 767px) {
+  body {
+    padding-bottom: 70px;
+  }
+}
+
+@media (min-width: 768px) {
+  .mobile-bottom-nav {
+    display: none !important;
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes checkmark {
+  0% {
+    transform: scale(0) rotate(45deg);
+  }
+  50% {
+    transform: scale(1.2) rotate(45deg);
+  }
+  100% {
+    transform: scale(1) rotate(45deg);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.animate-slideInUp {
+  animation: slideInUp 0.5s ease-out forwards;
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+.animate-checkmark {
+  animation: checkmark 0.5s ease-out forwards;
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.status-timeline {
+  position: relative;
+}
+
+.status-timeline::before {
+  content: '';
+  position: absolute;
+  left: 20px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #e5e7eb;
+}
+
+.status-step {
+  position: relative;
+  padding-left: 60px;
+  margin-bottom: 30px;
+}
+
+.status-step .step-icon {
+  position: absolute;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border: 3px solid #e5e7eb;
+  z-index: 1;
+}
+
+.status-step.active .step-icon {
+  border-color: #df20df;
+  background: #df20df;
+  color: white;
+}
+
+.status-step.completed .step-icon {
+  border-color: #10b981;
+  background: #10b981;
+  color: white;
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #receiptPrint, #receiptPrint * {
+    visibility: visible;
+  }
+  #receiptPrint {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+  .no-print {
+    display: none !important;
+  }
+}
+</style>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-black dark:text-white">
+
+<!-- Header -->
+<header class="border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-background-dark">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="flex items-center gap-3">
+          <img src="image/navlogo.png" alt="Logo" class="h-10 w-10 rounded-full object-cover" onerror="this.style.display='none'"/>
+          <h1 class="text-xl font-bold text-primary" id="storeName">My Shop</h1>
+        </a>
+      </div>
+      <nav class="flex items-center gap-4">
+        <a href="index.html" class="text-sm font-medium hover:text-primary transition">Home</a>
+        <a href="cart.html" class="text-sm font-medium hover:text-primary transition">Cart</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<!-- Main Content -->
+<main class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  
+  <!-- Search Section -->
+  <div id="searchSection" class="max-w-2xl mx-auto">
+    <div class="text-center mb-8 animate-fadeIn">
+      <div class="inline-flex items-center justify-center w-20 h-20 bg-primary/10 rounded-full mb-4">
+        <svg class="w-10 h-10 text-primary" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+        </svg>
+      </div>
+      <h1 class="text-3xl font-bold mb-3">Track Your Order</h1>
+      <p class="text-gray-600 dark:text-gray-400">Enter your Order ID to check the status</p>
+    </div>
+
+    <div class="bg-white dark:bg-background-dark border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg p-6 sm:p-8 animate-slideInUp">
+      <form onsubmit="trackOrder(event)" class="space-y-6">
+        <div>
+          <label class="block text-sm font-medium mb-2" for="orderIdInput">Order ID</label>
+          <input 
+            type="text" 
+            id="orderIdInput" 
+            class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-background-dark focus:ring-2 focus:ring-primary focus:border-transparent text-lg"
+            placeholder="ORD-1234567890"
+            required
+          />
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">
+            Your Order ID was shown when you placed the order
+          </p>
+        </div>
+        
+        <button 
+          type="submit" 
+          class="w-full bg-primary text-white font-bold py-4 rounded-lg hover:bg-primary/90 transition-all transform hover:scale-105"
+          id="trackBtn"
+        >
+          🔍 Track Order
+        </button>
+      </form>
+
+      <div class="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+        <p class="text-sm text-blue-800 dark:text-blue-300">
+          💡 <strong>Tip:</strong> Check your email or SMS for the Order ID
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div id="loadingSection" class="hidden max-w-2xl mx-auto text-center py-12">
+    <div class="inline-block">
+      <div class="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+    </div>
+    <p class="mt-4 text-gray-600 dark:text-gray-400 animate-pulse">Searching for your order...</p>
+  </div>
+
+  <!-- Order Not Found -->
+  <div id="notFoundSection" class="hidden max-w-2xl mx-auto">
+    <div class="bg-white dark:bg-background-dark border border-red-200 dark:border-red-800 rounded-lg shadow-lg p-8 text-center animate-slideInUp">
+      <div class="inline-flex items-center justify-center w-20 h-20 bg-red-100 dark:bg-red-900/30 rounded-full mb-4">
+        <svg class="w-10 h-10 text-red-500" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+        </svg>
+      </div>
+      <h2 class="text-2xl font-bold mb-3 text-red-600 dark:text-red-400">Order Not Found</h2>
+      <p class="text-gray-600 dark:text-gray-400 mb-6">
+        We couldn't find an order with this ID. Please check and try again.
+      </p>
+      <button onclick="resetSearch()" class="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition">
+        Try Again
+      </button>
+    </div>
+  </div>
+
+  <!-- Order Details Section -->
+  <div id="orderSection" class="hidden max-w-4xl mx-auto">
+    <!-- Order Status Card -->
+    <div class="bg-white dark:bg-background-dark border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg p-6 sm:p-8 mb-6 animate-slideInUp">
+      <div class="text-center mb-8">
+        <div id="statusIcon" class="inline-flex items-center justify-center w-24 h-24 rounded-full mb-4">
+          <!-- Icon will be injected -->
+        </div>
+        <h2 id="statusTitle" class="text-2xl sm:text-3xl font-bold mb-2"></h2>
+        <p id="statusMessage" class="text-gray-600 dark:text-gray-400"></p>
+      </div>
+
+      <!-- Order Info -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+        <div class="text-center sm:text-left">
+          <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Order ID</p>
+          <p id="displayOrderId" class="font-semibold text-primary"></p>
+        </div>
+        <div class="text-center sm:text-left">
+          <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Order Date</p>
+          <p id="displayOrderDate" class="font-semibold"></p>
+        </div>
+        <div class="text-center sm:text-left">
+          <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Payment Status</p>
+          <p id="displayPaymentStatus" class="font-semibold"></p>
+        </div>
+        <div class="text-center sm:text-left">
+          <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Total Amount</p>
+          <p id="displayOrderTotal" class="font-semibold text-lg"></p>
+        </div>
+      </div>
+
+      <!-- Timeline -->
+      <div class="status-timeline" id="orderTimeline">
+        <!-- Timeline will be injected -->
+      </div>
+
+      <!-- Actions -->
+      <div class="flex flex-col sm:flex-row gap-3 mt-8">
+        <button onclick="refreshOrder()" class="flex-1 px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition font-semibold">
+          🔄 Refresh Status
+        </button>
+        <button onclick="downloadReceipt()" class="flex-1 px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition font-semibold">
+          📥 Download Receipt
+        </button>
+        <button onclick="resetSearch()" class="flex-1 px-6 py-3 bg-gray-200 dark:bg-gray-700 text-black dark:text-white rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition font-semibold">
+          🔍 Track Another Order
+        </button>
+      </div>
+      
+      <!-- Refresh Tip -->
+      <div class="mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+        <p class="text-sm text-blue-800 dark:text-blue-300 text-center">
+          💡 Click "Refresh Status" to see the latest updates from our team
+        </p>
+      </div>
+    </div>
+
+    <!-- Customer & Items Details -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-fadeIn">
+      <!-- Customer Details -->
+      <div class="bg-white dark:bg-background-dark border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg p-6">
+        <h3 class="font-bold text-lg mb-4 flex items-center gap-2">
+          <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+          </svg>
+          Customer Details
+        </h3>
+        <div id="customerDetails" class="space-y-3 text-sm">
+          <!-- Customer details will be injected -->
+        </div>
+      </div>
+
+      <!-- Order Items -->
+      <div class="bg-white dark:bg-background-dark border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg p-6">
+        <h3 class="font-bold text-lg mb-4 flex items-center gap-2">
+          <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+          </svg>
+          Order Items
+        </h3>
+        <div id="orderItems" class="space-y-3">
+          <!-- Order items will be injected -->
+        </div>
+        <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+          <div class="space-y-2 text-sm">
+            <div class="flex justify-between">
+              <span>Subtotal:</span>
+              <span id="subtotalAmount"></span>
+            </div>
+            <div class="flex justify-between">
+              <span>Shipping:</span>
+              <span id="shippingAmount"></span>
+            </div>
+            <div class="flex justify-between">
+              <span>Tax:</span>
+              <span id="taxAmount"></span>
+            </div>
+            <div class="flex justify-between font-bold text-lg pt-2 border-t border-gray-200 dark:border-gray-700">
+              <span>Total:</span>
+              <span id="totalAmount" class="text-primary"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- Mobile Bottom Navigation -->
+<nav class="mobile-bottom-nav">
+  <div class="flex items-center justify-around max-w-md mx-auto">
+    <a href="index.html" class="mobile-bottom-nav-item">
+      <svg fill="currentColor" viewBox="0 0 24 24">
+        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+      </svg>
+      <span>Home</span>
+    </a>
+    <a href="categories.html" class="mobile-bottom-nav-item">
+      <svg fill="currentColor" viewBox="0 0 24 24">
+        <path d="M4 10.5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5-.67-1.5-1.5-1.5zm0-6c-.83 0-1.5.67-1.5 1.5S3.17 7.5 4 7.5 5.5 6.83 5.5 6 4.83 4.5 4 4.5zm0 12c-.83 0-1.5.68-1.5 1.5s.68 1.5 1.5 1.5 1.5-.68 1.5-1.5-.67-1.5-1.5-1.5zM7 19h14v-2H7v2zm0-6h14v-2H7v2zm0-8v2h14V5H7z"/>
+      </svg>
+      <span>Category</span>
+    </a>
+    <a href="track-order.html" class="mobile-bottom-nav-item active">
+      <svg fill="currentColor" viewBox="0 0 24 24">
+        <path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+      </svg>
+      <span>Track</span>
+    </a>
+    <a href="profile.html" class="mobile-bottom-nav-item">
+      <svg fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+      </svg>
+      <span>Profile</span>
+    </a>
+    <a href="cart.html" class="mobile-bottom-nav-item">
+      <svg fill="currentColor" viewBox="0 0 24 24">
+        <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+      </svg>
+      <span>Cart</span>
+    </a>
+  </div>
+</nav>
+
+<!-- Hidden Receipt for Download/Print -->
+<div id="receiptPrint" style="display: none;">
+  <div style="max-width: 800px; margin: 0 auto; padding: 40px; font-family: Arial, sans-serif;">
+    <div style="text-align: center; border-bottom: 2px solid #df20df; padding-bottom: 20px; margin-bottom: 20px;">
+      <h1 style="color: #df20df; margin: 0 0 10px 0;" id="receiptStoreName">My Shop</h1>
+      <h2 style="margin: 0; font-size: 24px;">Order Receipt</h2>
+    </div>
+    
+    <div style="display: flex; justify-content: space-between; margin-bottom: 30px;">
+      <div>
+        <p style="margin: 5px 0;"><strong>Order ID:</strong> <span id="receiptOrderId"></span></p>
+        <p style="margin: 5px 0;"><strong>Date:</strong> <span id="receiptDate"></span></p>
+        <p style="margin: 5px 0;"><strong>Status:</strong> <span id="receiptStatus"></span></p>
+      </div>
+    </div>
+    
+    <div style="margin-bottom: 30px;">
+      <h3 style="border-bottom: 1px solid #ccc; padding-bottom: 10px;">Customer Information</h3>
+      <div id="receiptCustomer"></div>
+    </div>
+    
+    <div style="margin-bottom: 30px;">
+      <h3 style="border-bottom: 1px solid #ccc; padding-bottom: 10px;">Order Items</h3>
+      <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+        <thead>
+          <tr style="background: #f3f4f6;">
+            <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">Item</th>
+            <th style="padding: 10px; text-align: center; border: 1px solid #ddd;">Qty</th>
+            <th style="padding: 10px; text-align: right; border: 1px solid #ddd;">Price</th>
+            <th style="padding: 10px; text-align: right; border: 1px solid #ddd;">Total</th>
+          </tr>
+        </thead>
+        <tbody id="receiptItems">
+        </tbody>
+      </table>
+    </div>
+    
+    <div style="margin-top: 30px; text-align: right;">
+      <div id="receiptTotals" style="display: inline-block; min-width: 300px;">
+      </div>
+    </div>
+    
+    <div style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 2px solid #df20df; color: #666;">
+      <p>Thank you for your order!</p>
+      <p style="font-size: 12px;">For any queries, please contact our support.</p>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="js/track-order.js"></script>
+</body>
+</html>

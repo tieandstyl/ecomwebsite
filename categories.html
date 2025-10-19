@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title id="pageTitle">Categories - My WhatsApp Shop</title>
+<meta name="description" content="Browse all product categories"/>
+<link rel="icon" href="assets/favicon.png"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&amp;family=Playfair+Display:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#df20df",
+                    "background-light": "#f8f6f8",
+                    "background-dark": "#211121",
+                },
+                fontFamily: {
+                    "display": ["Plus Jakarta Sans"]
+                },
+                borderRadius: {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+                },
+            },
+        },
+    }
+</script>
+<style>
+.drawer-overlay { position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:40; opacity:0; pointer-events:none; transition:opacity .3s ease; }
+.drawer-overlay.open { opacity:1; pointer-events:auto; }
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Category Grid */
+#categoryGrid { 
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  padding-bottom: 1rem;
+}
+
+@media (min-width: 640px) {
+  #categoryGrid { 
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  #categoryGrid { 
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+}
+
+/* Mobile Bottom Navigation */
+.mobile-bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  border-top: 1px solid rgba(223, 32, 223, 0.2);
+  padding: 0.5rem 0;
+  z-index: 50;
+  box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.dark .mobile-bottom-nav {
+  background: #211121;
+  border-top-color: rgba(223, 32, 223, 0.3);
+}
+
+.mobile-bottom-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  padding: 0.5rem;
+  color: #6b7280;
+  transition: all 0.2s;
+  position: relative;
+  text-decoration: none;
+}
+
+.mobile-bottom-nav-item.active {
+  color: #df20df;
+}
+
+.mobile-bottom-nav-item svg {
+  width: 24px;
+  height: 24px;
+}
+
+.mobile-bottom-nav-item span {
+  font-size: 0.625rem;
+  font-weight: 500;
+}
+
+.mobile-bottom-nav-badge {
+  position: absolute;
+  top: 4px;
+  right: 50%;
+  margin-right: -20px;
+  background: #df20df;
+  color: white;
+  font-size: 0.625rem;
+  padding: 0.125rem 0.375rem;
+  border-radius: 9999px;
+  font-weight: bold;
+  min-width: 18px;
+  text-align: center;
+}
+
+@media (max-width: 767px) {
+  body {
+    padding-bottom: 70px;
+  }
+}
+
+@media (min-width: 768px) {
+  .mobile-bottom-nav {
+    display: none !important;
+  }
+}
+
+.hero-title { font-family: 'Playfair Display', serif; }
+.brand-name { font-family: 'Playfair Display', serif; }
+</style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="flex h-auto min-h-screen w-full flex-col">
+<header class="sticky top-0 z-20 w-full bg-background-light/80 backdrop-blur-sm dark:bg-background-dark/80 border-b border-primary/20">
+<div class="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+<div class="flex items-center gap-3 py-4">
+<img src="image/navlogo.png" alt="Store Logo" class="h-10 w-10 rounded-full object-cover" id="storeLogo"/>
+<h1 class="brand-name text-xl font-bold text-black dark:text-white cursor-pointer" id="storeName" onclick="window.location.href='index.html'">My Shop</h1>
+</div>
+<nav class="hidden items-center gap-8 md:flex" id="navCategories">
+</nav>
+<div class="flex items-center gap-2">
+<button class="hidden md:flex h-10 w-10 items-center justify-center rounded-full text-black transition-colors hover:bg-primary/10 dark:text-white dark:hover:bg-primary/20" onclick="window.location.href='track-order.html'" title="Track Order">
+<svg fill="currentColor" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+<path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+</svg>
+</button>
+<button class="flex h-10 w-10 items-center justify-center rounded-full text-black transition-colors hover:bg-primary/10 dark:text-white dark:hover:bg-primary/20" id="searchButton" onclick="openSearch()">
+<svg fill="currentColor" height="20" viewBox="0 0 256 256" width="20" xmlns="http://www.w3.org/2000/svg">
+<path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path>
+</svg>
+</button>
+<button class="hidden md:flex h-10 w-10 items-center justify-center rounded-full text-black transition-colors hover:bg-primary/10 dark:text-white dark:hover:bg-primary/20" onclick="window.location.href='profile.html'">
+<svg fill="currentColor" height="20" viewBox="0 0 256 256" width="20" xmlns="http://www.w3.org/2000/svg">
+<path d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z"></path>
+</svg>
+</button>
+<button class="relative flex h-10 w-10 items-center justify-center rounded-full text-black transition-colors hover:bg-primary/10 dark:text-white dark:hover:bg-primary/20" id="cartButton">
+<svg fill="currentColor" height="20" viewBox="0 0 256 256" width="20" xmlns="http://www.w3.org/2000/svg">
+<path d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40Zm0,160H40V56H216V200ZM176,88a48,48,0,0,1-96,0,8,8,0,0,1,16,0,32,32,0,0,0,64,0,8,8,0,0,1,16,0Z"></path>
+</svg>
+<span class="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold" id="cartBadge">0</span>
+</button>
+</div>
+</div>
+</header>
+
+<main class="flex-grow">
+<section class="py-16 sm:py-24">
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+<div class="mb-12 text-center">
+<h2 class="hero-title text-3xl font-bold tracking-tight text-black dark:text-white sm:text-4xl">Shop By Category</h2>
+<p class="mt-4 text-lg text-black/60 dark:text-white/60">Explore our collections and find your perfect style.</p>
+</div>
+<div class="scrollbar-hide" id="categoryGrid">
+<!-- Categories will be loaded here by JavaScript -->
+</div>
+</div>
+</section>
+</main>
+
+<footer class="w-full bg-background-light dark:bg-background-dark border-t border-primary/20">
+<div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+<div class="flex flex-wrap justify-center gap-x-8 gap-y-4">
+<a class="text-sm text-black/60 transition-colors hover:text-primary dark:text-white/60 dark:hover:text-primary" href="#" id="whatsappFooter">Contact Us</a>
+<a class="text-sm text-black/60 transition-colors hover:text-primary dark:text-white/60 dark:hover:text-primary" href="track-order.html">Track Order</a>
+<a class="text-sm text-black/60 transition-colors hover:text-primary dark:text-white/60 dark:hover:text-primary" href="profile.html">My Profile</a>
+<a class="text-sm text-black/60 transition-colors hover:text-primary dark:text-white/60 dark:hover:text-primary" href="cart.html">View Cart</a>
+</div>
+<p class="mt-8 text-center text-sm text-black/50 dark:text-white/50">© 2024 <span id="footerStoreName">My Shop</span>. All rights reserved.</p>
+</div>
+</footer>
+</div>
+
+<!-- Mobile Bottom Navigation -->
+<nav class="mobile-bottom-nav">
+  <div class="flex items-center justify-around max-w-md mx-auto">
+    <a href="/" class="mobile-bottom-nav-item">
+      <svg fill="currentColor" viewBox="0 0 24 24">
+        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+      </svg>
+      <span>Home</span>
+    </a>
+    <a href="/categories" class="mobile-bottom-nav-item active">
+      <svg fill="currentColor" viewBox="0 0 24 24">
+        <path d="M4 10.5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5-.67-1.5-1.5-1.5zm0-6c-.83 0-1.5.67-1.5 1.5S3.17 7.5 4 7.5 5.5 6.83 5.5 6 4.83 4.5 4 4.5zm0 12c-.83 0-1.5.68-1.5 1.5s.68 1.5 1.5 1.5 1.5-.68 1.5-1.5-.67-1.5-1.5-1.5zM7 19h14v-2H7v2zm0-6h14v-2H7v2zm0-8v2h14V5H7z"/>
+      </svg>
+      <span>Category</span>
+    </a>
+    <a href="/track-order" class="mobile-bottom-nav-item">
+      <svg fill="currentColor" viewBox="0 0 24 24">
+        <path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+      </svg>
+      <span>Track</span>
+    </a>
+    <a href="/profile" class="mobile-bottom-nav-item">
+      <svg fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+      </svg>
+      <span>Profile</span>
+    </a>
+    <a href="/cart" class="mobile-bottom-nav-item">
+      <svg fill="currentColor" viewBox="0 0 24 24">
+        <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+      </svg>
+      <span class="mobile-bottom-nav-badge" id="mobileCartBadge">0</span>
+      <span>Cart</span>
+    </a>
+  </div>
+</nav>
+
+<!-- Cart Drawer - Hidden by default -->
+<div class="drawer-overlay" id="cartOverlay"></div>
+<aside class="fixed top-0 right-0 w-[420px] max-w-[90vw] h-full bg-white dark:bg-background-dark shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out z-50 flex flex-col" id="cartDrawer">
+<header class="p-5 flex items-center justify-between border-b-2 border-primary/20">
+<strong class="text-xl font-bold">🛒 Your Cart</strong>
+<button class="px-4 py-2 rounded-lg border-2 border-primary text-primary font-bold hover:bg-primary/10 transition-colors" onclick="closeCart()">✕</button>
+</header>
+<main class="flex-1 p-5 overflow-auto" id="cartContent">
+<div class="text-center py-12 text-gray-500">Your cart is empty</div>
+</main>
+</aside>
+
+<!-- Search Modal -->
+<div class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center p-4" id="searchModal" onclick="if(event.target===this) closeSearch()">
+<div class="bg-white dark:bg-background-dark rounded-lg shadow-2xl w-full max-w-2xl max-h-[80vh] flex flex-col">
+<div class="p-4 border-b border-primary/20">
+<div class="flex items-center gap-3">
+<svg class="w-5 h-5 text-black/40 dark:text-white/40" fill="currentColor" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+<path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path>
+</svg>
+<input 
+  type="text" 
+  id="searchInput" 
+  placeholder="Search products..." 
+  class="flex-1 bg-transparent border-none outline-none text-black dark:text-white text-lg"
+  oninput="handleSearch()"
+/>
+<button class="text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white" onclick="closeSearch()">✕</button>
+</div>
+</div>
+<div class="flex-1 overflow-auto p-4" id="searchResults">
+<div class="text-center py-12 text-black/40 dark:text-white/40">Start typing to search products...</div>
+</div>
+</div>
+</div>
+
+<script src="js/categories.js"></script>
+<script>
+// Sync mobile cart badge with desktop cart badge
+function syncMobileCartBadge() {
+  const desktopBadge = document.getElementById('cartBadge');
+  const mobileBadge = document.getElementById('mobileCartBadge');
+  if (desktopBadge && mobileBadge) {
+    mobileBadge.textContent = desktopBadge.textContent;
+    mobileBadge.style.display = desktopBadge.textContent === '0' ? 'none' : 'flex';
+  }
+}
+
+// Run sync on load and periodically
+syncMobileCartBadge();
+setInterval(syncMobileCartBadge, 500);
+</script>
+</body></html>

@@ -1,0 +1,42 @@
+[
+  {
+    "id": "cat-01",
+    "name": "Claw clips",
+    "slug": "claw-clips",
+    "description": "Latest claw clip styles and trends",
+    "image": "assets/categories/claw-clips.png",
+    "parentId": null,
+    "order": 1,
+    "active": true
+  },
+  {
+    "id": "cat-02",
+    "name": "Scrunchies",
+    "slug": "scrunchies",
+    "description": "Latest scrunchie styles and trends",
+    "image": "assets/categories/scrunchies.png",
+    "parentId": null,
+    "order": 2,
+    "active": true
+  },
+  {
+    "id": "cat-03",
+    "name": "Bow clips",
+    "slug": "bow-clips",
+    "description": "Latest bow clip styles and trends",
+    "image": "assets/categories/bow-clips.png",
+    "parentId": null,
+    "order": 3,
+    "active": true
+  },
+  {
+    "id": "cat-04",
+    "name": "Tie-Style",
+    "slug": "tie-style",
+    "description": "",
+    "image": "assets/categories/tie-style.jpg",
+    "parentId": null,
+    "order": 1,
+    "active": true
+  }
+]
