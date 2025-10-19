@@ -612,13 +612,98 @@ async function loadAnalytics() {
   }
 }
 
+// Update analytics based on date filter
+window.updateAnalytics = async function() {
+  const filterValue = document.getElementById('analyticsDateFilter').value;
+  
+  try {
+    const result = await getAllOrders();
+    if (!result.success) return;
+    
+    let filteredOrders = result.orders;
+    const now = new Date();
+    
+    // Filter orders based on selected date range
+    switch(filterValue) {
+      case 'today':
+        filteredOrders = filteredOrders.filter(order => {
+          const orderDate = order.createdAt?.toDate ? order.createdAt.toDate() : new Date(order.createdAt);
+          return orderDate.toDateString() === now.toDateString();
+        });
+        break;
+        
+      case 'week':
+        const weekAgo = new Date(now);
+        weekAgo.setDate(weekAgo.getDate() - 7);
+        filteredOrders = filteredOrders.filter(order => {
+          const orderDate = order.createdAt?.toDate ? order.createdAt.toDate() : new Date(order.createdAt);
+          return orderDate >= weekAgo;
+        });
+        break;
+        
+      case 'month':
+        const monthAgo = new Date(now);
+        monthAgo.setMonth(monthAgo.getMonth() - 1);
+        filteredOrders = filteredOrders.filter(order => {
+          const orderDate = order.createdAt?.toDate ? order.createdAt.toDate() : new Date(order.createdAt);
+          return orderDate >= monthAgo;
+        });
+        break;
+        
+      case 'all':
+      default:
+        // No filtering, use all orders
+        break;
+    }
+    
+    // Calculate analytics metrics
+    const confirmedOrders = filteredOrders.filter(o => o.paymentStatus === 'confirmed');
+    const totalRevenue = confirmedOrders.reduce((sum, order) => sum + (order.totals?.total || 0), 0);
+    const avgOrderValue = confirmedOrders.length > 0 ? totalRevenue / confirmedOrders.length : 0;
+    
+    // Update analytics summary cards
+    document.getElementById('analyticsRevenue').textContent = `₹${totalRevenue.toFixed(2)}`;
+    document.getElementById('analyticsOrders').textContent = filteredOrders.length;
+    document.getElementById('analyticsAvgOrder').textContent = `₹${avgOrderValue.toFixed(2)}`;
+    
+    // Re-render all charts with filtered data
+    renderRevenueChart(filteredOrders);
+    renderStatusChart(filteredOrders);
+    renderPaymentChart(filteredOrders);
+    renderTopProducts(filteredOrders);
+    renderRecentCustomers(filteredOrders);
+    renderSalesByDate(filteredOrders);
+    
+  } catch (error) {
+    console.error('Error updating analytics:', error);
+  }
+};
+
 // Revenue Over Time Chart
 function renderRevenueChart(orders) {
   const ctx = document.getElementById('revenueChart');
   if (!ctx) return;
   
-  // Get last 30 days
-  const days = 30;
+  // Determine days based on filter
+  const filterValue = document.getElementById('analyticsDateFilter')?.value || 'month';
+  let days = 30;
+  
+  switch(filterValue) {
+    case 'today':
+      days = 1;
+      break;
+    case 'week':
+      days = 7;
+      break;
+    case 'month':
+      days = 30;
+      break;
+    case 'all':
+      // Show last 90 days for all time
+      days = 90;
+      break;
+  }
+  
   const labels = [];
   const data = [];
   const today = new Date();
@@ -649,19 +734,45 @@ function renderRevenueChart(orders) {
     data: {
       labels: labels,
       datasets: [{
-        label: 'Revenue',
+        label: 'Revenue (₹)',
         data: data,
         borderColor: '#10b981',
         backgroundColor: 'rgba(16, 185, 129, 0.1)',
         tension: 0.4,
-        fill: true
+        fill: true,
+        borderWidth: 2,
+        pointBackgroundColor: '#10b981',
+        pointBorderColor: '#fff',
+        pointBorderWidth: 2,
+        pointRadius: 4,
+        pointHoverRadius: 6
       }]
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
+      interaction: {
+        mode: 'index',
+        intersect: false,
+      },
       plugins: {
-        legend: { display: false }
+        legend: { 
+          display: true,
+          labels: {
+            color: '#666',
+            font: {
+              size: 12,
+              weight: 'bold'
+            }
+          }
+        },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              return 'Revenue: ₹' + context.parsed.y.toFixed(2);
+            }
+          }
+        }
       },
       scales: {
         y: {
@@ -669,7 +780,19 @@ function renderRevenueChart(orders) {
           ticks: {
             callback: function(value) {
               return '₹' + value;
-            }
+            },
+            color: '#999'
+          },
+          grid: {
+            color: 'rgba(0, 0, 0, 0.05)'
+          }
+        },
+        x: {
+          ticks: {
+            color: '#999'
+          },
+          grid: {
+            display: false
           }
         }
       }
