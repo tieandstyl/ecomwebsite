@@ -12,7 +12,7 @@
     "address": "123 Market Street, Chennai, IN"
   },
   "payments": {
-    "gpayUpiId": "myshop@okaxis",
+    "gpayUpiId": "yasmineyas0012@okaxis",
     "gpayQrImage": "assets/gpay-qr.png",
     "instructions": "Pay via GPay UPI or scan the QR. Share the UTR and screenshot on WhatsApp."
   },
