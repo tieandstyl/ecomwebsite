@@ -1,0 +1,30 @@
+# Cache Control Headers
+
+# JSON data files - no cache, always fresh
+/data/*.json
+  Cache-Control: no-cache, no-store, must-revalidate
+  Pragma: no-cache
+  Expires: 0
+
+# JavaScript files - no cache for immediate updates
+/js/*.js
+  Cache-Control: no-cache, no-store, must-revalidate
+  Pragma: no-cache
+  Expires: 0
+
+# HTML files - no cache
+/*.html
+  Cache-Control: no-cache, no-store, must-revalidate
+  Pragma: no-cache
+  Expires: 0
+
+# Images - cache for 1 hour (can be updated)
+/image/*
+  Cache-Control: public, max-age=3600
+
+/assets/*
+  Cache-Control: public, max-age=3600
+
+# Videos - cache for 1 day
+/video/*
+  Cache-Control: public, max-age=86400

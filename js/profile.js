@@ -130,7 +130,7 @@
   };
 
   // Load store name and logo
-  fetch('data/store.json').then(r => r.json()).then(store => {
+  fetch('data/store.json', { cache: 'no-cache' }).then(r => r.json()).then(store => {
     document.getElementById('storeName').textContent = store.name;
     
     // Set logo

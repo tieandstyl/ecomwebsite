@@ -308,7 +308,7 @@
 
   async function loadCategories() {
     try {
-      const response = await fetch('data/categories.json');
+      const response = await fetch('data/categories.json', { cache: 'no-cache' });
       categories = await response.json();
       
       const nav = document.getElementById('navCategories');
@@ -358,7 +358,7 @@
 
   async function loadProducts() {
     try {
-      const response = await fetch('data/products.json');
+      const response = await fetch('data/products.json', { cache: 'no-cache' });
       products = await response.json();
       renderProducts();
       renderRecommended();
@@ -413,7 +413,7 @@
 
   async function loadNews() {
     try {
-      const response = await fetch('data/news.json');
+      const response = await fetch('data/news.json', { cache: 'no-cache' });
       const news = await response.json();
       
       const activeNews = news.filter(n => n.active);

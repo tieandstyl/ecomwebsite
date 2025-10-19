@@ -315,7 +315,7 @@
 
   async function loadCategories() {
     try {
-      const response = await fetch('data/categories.json');
+      const response = await fetch('data/categories.json', { cache: 'no-cache' });
       categories = await response.json();
       
       const nav = document.getElementById('navCategories');
@@ -333,7 +333,7 @@
 
   async function loadProducts() {
     try {
-      const response = await fetch('data/products.json');
+      const response = await fetch('data/products.json', { cache: 'no-cache' });
       products = await response.json();
     } catch (error) {
       console.error('Error loading products:', error);

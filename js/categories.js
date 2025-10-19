@@ -6,7 +6,7 @@ let allProducts = [];
 // Load store configuration
 async function loadStoreConfig() {
   try {
-    const response = await fetch('data/store.json');
+    const response = await fetch('data/store.json', { cache: 'no-cache' });
     const config = await response.json();
     
     document.getElementById('storeName').textContent = config.name || 'My Shop';
@@ -25,7 +25,7 @@ async function loadStoreConfig() {
 // Load all products to count per category
 async function loadProducts() {
   try {
-    const response = await fetch('data/products.json');
+    const response = await fetch('data/products.json', { cache: 'no-cache' });
     allProducts = await response.json();
   } catch (error) {
     console.error('Error loading products:', error);
@@ -47,7 +47,7 @@ async function loadCategories() {
     await loadProducts();
     
     // Load categories
-    const response = await fetch('data/categories.json');
+    const response = await fetch('data/categories.json', { cache: 'no-cache' });
     const categoriesData = await response.json();
     
     allCategories = categoriesData
@@ -239,7 +239,7 @@ async function handleSearch() {
   `;
   
   try {
-    const response = await fetch('data/products.json');
+    const response = await fetch('data/products.json', { cache: 'no-cache' });
     const products = await response.json();
     
     // Smart search with scoring

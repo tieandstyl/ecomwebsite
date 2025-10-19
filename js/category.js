@@ -182,11 +182,11 @@
 
   async function loadCategories() {
     try {
-      const response = await fetch('data/categories.json');
+      const response = await fetch('data/categories.json', { cache: 'no-cache' });
       categories = await response.json();
       
       // Load subcategories
-      const subcatResponse = await fetch('data/subcategories.json');
+      const subcatResponse = await fetch('data/subcategories.json', { cache: 'no-cache' });
       subcategories = await subcatResponse.json();
       
       // Get category from URL
@@ -389,7 +389,7 @@
 
   async function loadProducts() {
     try {
-      const response = await fetch('data/products.json');
+      const response = await fetch('data/products.json', { cache: 'no-cache' });
       products = await response.json();
       renderProducts();
     } catch (error) {
