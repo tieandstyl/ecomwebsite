@@ -28,7 +28,7 @@ window.publishToGitHub = async function() {
 };
 // Tie-Style Admin Panel - JavaScript Functions
 
-// Image Preview Function
+// Image Preview Function (Single Image - Legacy)
 function previewImage(input) {
     const preview = document.getElementById('image-preview');
     const previewImg = document.getElementById('preview-img');
@@ -44,6 +44,182 @@ function previewImage(input) {
         reader.readAsDataURL(input.files[0]);
     } else {
         preview.style.display = 'none';
+    }
+}
+
+// Multiple Images Preview Function (Up to 6 images)
+function previewMultipleImages(input) {
+    const preview = document.getElementById('images-preview');
+    const previewContainer = document.getElementById('preview-container');
+    
+    if (input.files && input.files.length > 0) {
+        // Limit to 6 images
+        const maxImages = 6;
+        const filesToPreview = Math.min(input.files.length, maxImages);
+        
+        if (input.files.length > maxImages) {
+            alert(`⚠️ Maximum 6 images allowed. Only first ${maxImages} images will be uploaded.`);
+        }
+        
+        previewContainer.innerHTML = '';
+        
+        for (let i = 0; i < filesToPreview; i++) {
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                const div = document.createElement('div');
+                div.style.position = 'relative';
+                div.innerHTML = `
+                    <img src="${e.target.result}" alt="Preview ${i+1}" 
+                         style="width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 8px; border: 2px solid #df20df;">
+                    <small style="display: block; margin-top: 4px; text-align: center; font-weight: bold; color: #df20df;">Image ${i+1}</small>
+                `;
+                previewContainer.appendChild(div);
+            };
+            
+            reader.readAsDataURL(input.files[i]);
+        }
+        
+        preview.style.display = 'block';
+    } else {
+        preview.style.display = 'none';
+    }
+}
+
+// Auto-generate SKU from title
+function autoGenerateSKU() {
+    const titleInput = document.getElementById('title');
+    const skuInput = document.getElementById('sku');
+    
+    if (!titleInput || !skuInput || skuInput.value) return; // Don't override existing SKU
+    
+    titleInput.addEventListener('blur', function() {
+        if (!skuInput.value && titleInput.value) {
+            // Generate SKU from title
+            // Example: "Skinny Scrunchie" -> "SKIN-SCR"
+            const words = titleInput.value.trim().toUpperCase().split(/\s+/);
+            let sku = '';
+            
+            if (words.length >= 2) {
+                // Take first 4 letters of first two words
+                sku = words[0].substring(0, 4) + '-' + words[1].substring(0, 3);
+            } else if (words.length === 1) {
+                // Take first 7 letters
+                sku = words[0].substring(0, 7);
+            }
+            
+            // Add a random number suffix
+            sku += '-' + Math.floor(Math.random() * 900 + 100);
+            
+            skuInput.value = sku;
+        }
+    });
+}
+
+// Initialize auto-generation on page load
+document.addEventListener('DOMContentLoaded', function() {
+    autoGenerateSKU();
+});
+
+// Dynamic Color Variant Fields
+function addColor() {
+    const container = document.getElementById('colors-container');
+    const colorRow = document.createElement('div');
+    colorRow.className = 'color-row';
+    colorRow.style.cssText = 'background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #e0e0e0;';
+    colorRow.innerHTML = `
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+            <div>
+                <label style="display: block; font-size: 12px; font-weight: 600; color: #555; margin-bottom: 5px;">Color Name</label>
+                <input type="text" 
+                       name="color_name" 
+                       placeholder="e.g., Ocean Blue"
+                       style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px;">
+            </div>
+            <div>
+                <label style="display: block; font-size: 12px; font-weight: 600; color: #555; margin-bottom: 5px;">Hex Code</label>
+                <div style="display: flex; gap: 8px; align-items: center;">
+                    <input type="text" 
+                           name="color_hex" 
+                           placeholder="#0000FF"
+                           pattern="^#[0-9A-Fa-f]{6}$"
+                           style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; font-family: monospace;"
+                           onchange="updateColorPreview(this)"
+                           oninput="updateColorPreview(this)">
+                    <div class="color-preview" style="width: 45px; height: 45px; border-radius: 8px; border: 2px solid #ddd; background-color: #CCCCCC; box-shadow: 0 2px 4px rgba(0,0,0,0.1); flex-shrink: 0;"></div>
+                </div>
+            </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 12px; align-items: end;">
+            <div>
+                <label style="display: block; font-size: 12px; font-weight: 600; color: #555; margin-bottom: 5px;">Stock Quantity</label>
+                <input type="number" 
+                       name="color_stock" 
+                       placeholder="0"
+                       min="0"
+                       value="0"
+                       style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px;">
+            </div>
+            <div>
+                <label style="display: block; font-size: 12px; font-weight: 600; color: #555; margin-bottom: 5px;">Status</label>
+                <label style="display: flex; align-items: center; gap: 8px; padding: 10px; background: white; border: 1px solid #ddd; border-radius: 6px; cursor: pointer;">
+                    <input type="checkbox" 
+                           name="color_available" 
+                           checked
+                           style="width: 18px; height: 18px; cursor: pointer;">
+                    <span style="font-size: 14px; font-weight: 500;">Available</span>
+                </label>
+            </div>
+            <button type="button" class="btn btn-sm btn-danger" onclick="removeColor(this)" style="padding: 10px 16px; height: 45px; display: flex; align-items: center; gap: 5px;">
+                <span style="font-size: 16px;">✖</span>
+                <span>Remove</span>
+            </button>
+        </div>
+    `;
+    container.appendChild(colorRow);
+}
+
+function removeColor(button) {
+    const container = document.getElementById('colors-container');
+    const row = button.closest('.color-row');
+    
+    // Keep at least one color row
+    if (container.children.length > 1) {
+        row.remove();
+    } else {
+        // Clear the inputs instead of removing
+        const inputs = row.querySelectorAll('input[type="text"], input[type="number"]');
+        inputs.forEach(input => input.value = '');
+        const checkbox = row.querySelector('input[type="checkbox"]');
+        if (checkbox) checkbox.checked = true;
+        const preview = row.querySelector('.color-preview');
+        if (preview) preview.style.backgroundColor = '#CCCCCC';
+    }
+}
+
+function updateColorPreview(input) {
+    const colorRow = input.closest('.color-row');
+    if (!colorRow) return;
+    
+    const preview = colorRow.querySelector('.color-preview');
+    const hexValue = input.value.trim();
+    
+    // Validate hex color
+    const hexRegex = /^#[0-9A-Fa-f]{6}$/;
+    
+    if (hexRegex.test(hexValue)) {
+        preview.style.backgroundColor = hexValue;
+        input.style.borderColor = '#ddd';
+        input.style.boxShadow = 'none';
+    } else {
+        preview.style.backgroundColor = '#CCCCCC';
+        if (hexValue) {
+            input.style.borderColor = '#dc3545';
+            input.style.boxShadow = '0 0 0 0.2rem rgba(220, 53, 69, 0.25)';
+        } else {
+            input.style.borderColor = '#ddd';
+            input.style.boxShadow = 'none';
+        }
     }
 }
 

@@ -39,11 +39,11 @@
                         <input type="text" 
                                id="id" 
                                name="id" 
-                               value="{{ product.id if product else 'prod-xxx-001' }}"
+                               value="{{ product.id if product else '' }}"
                                {% if product %}readonly{% endif %}
-                               required
-                               placeholder="e.g., prod-scr-001">
-                        <small>Use format: prod-[category]-[number]</small>
+                               readonly
+                               placeholder="Auto-generated">
+                        <small>🤖 Automatically generated (e.g., prod-001)</small>
                     </div>
 
                     <div class="form-group">
@@ -52,8 +52,10 @@
                                id="sku" 
                                name="sku" 
                                value="{{ product.sku if product else '' }}"
-                               required
-                               placeholder="e.g., SCR-SKIN-001">
+                               {% if product %}readonly{% endif %}
+                               readonly
+                               placeholder="Auto-generated">
+                        <small>🤖 Automatically generated from title</small>
                     </div>
 
                     <div class="form-group">
@@ -163,16 +165,6 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="taxRatePct">Tax Rate (%)</label>
-                        <input type="number" 
-                               id="taxRatePct" 
-                               name="taxRatePct" 
-                               value="{{ product.taxRatePct if product else '5' }}"
-                               min="0"
-                               step="0.1">
-                    </div>
-
-                    <div class="form-group">
                         <label class="checkbox-label">
                             <input type="checkbox" 
                                    name="available" 
@@ -182,10 +174,128 @@
                     </div>
                 </div>
 
+                <!-- Color Variants -->
+                <div class="form-section">
+                    <h3>🎨 Color Variants</h3>
+                    <p><small>Add color variants for this product with individual stock tracking</small></p>
+                    
+                    <div id="colors-container" style="display: flex; flex-direction: column; gap: 15px;">
+                        {% if product and product.colors %}
+                            {% for color in product.colors %}
+                                <div class="color-row" style="background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #e0e0e0;">
+                                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                                        <div>
+                                            <label style="display: block; font-size: 12px; font-weight: 600; color: #555; margin-bottom: 5px;">Color Name</label>
+                                            <input type="text" 
+                                                   name="color_name" 
+                                                   value="{{ color.name }}" 
+                                                   placeholder="e.g., Crimson Red"
+                                                   style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px;">
+                                        </div>
+                                        <div>
+                                            <label style="display: block; font-size: 12px; font-weight: 600; color: #555; margin-bottom: 5px;">Hex Code</label>
+                                            <div style="display: flex; gap: 8px; align-items: center;">
+                                                <input type="text" 
+                                                       name="color_hex" 
+                                                       value="{{ color.hex }}" 
+                                                       placeholder="#FF0000"
+                                                       pattern="^#[0-9A-Fa-f]{6}$"
+                                                       style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; font-family: monospace;"
+                                                       onchange="updateColorPreview(this)"
+                                                       oninput="updateColorPreview(this)">
+                                                <div class="color-preview" style="width: 45px; height: 45px; border-radius: 8px; border: 2px solid #ddd; background-color: {{ color.hex }}; box-shadow: 0 2px 4px rgba(0,0,0,0.1); flex-shrink: 0;"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 12px; align-items: end;">
+                                        <div>
+                                            <label style="display: block; font-size: 12px; font-weight: 600; color: #555; margin-bottom: 5px;">Stock Quantity</label>
+                                            <input type="number" 
+                                                   name="color_stock" 
+                                                   value="{{ color.stock }}" 
+                                                   placeholder="0"
+                                                   min="0"
+                                                   style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px;">
+                                        </div>
+                                        <div>
+                                            <label style="display: block; font-size: 12px; font-weight: 600; color: #555; margin-bottom: 5px;">Status</label>
+                                            <label style="display: flex; align-items: center; gap: 8px; padding: 10px; background: white; border: 1px solid #ddd; border-radius: 6px; cursor: pointer;">
+                                                <input type="checkbox" 
+                                                       name="color_available" 
+                                                       {% if color.available %}checked{% endif %}
+                                                       style="width: 18px; height: 18px; cursor: pointer;">
+                                                <span style="font-size: 14px; font-weight: 500;">Available</span>
+                                            </label>
+                                        </div>
+                                        <button type="button" class="btn btn-sm btn-danger" onclick="removeColor(this)" style="padding: 10px 16px; height: 45px; display: flex; align-items: center; gap: 5px;">
+                                            <span style="font-size: 16px;">✖</span>
+                                            <span>Remove</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="color-row" style="background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #e0e0e0;">
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                                    <div>
+                                        <label style="display: block; font-size: 12px; font-weight: 600; color: #555; margin-bottom: 5px;">Color Name</label>
+                                        <input type="text" 
+                                               name="color_name" 
+                                               placeholder="e.g., Crimson Red"
+                                               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px;">
+                                    </div>
+                                    <div>
+                                        <label style="display: block; font-size: 12px; font-weight: 600; color: #555; margin-bottom: 5px;">Hex Code</label>
+                                        <div style="display: flex; gap: 8px; align-items: center;">
+                                            <input type="text" 
+                                                   name="color_hex" 
+                                                   placeholder="#FF0000"
+                                                   pattern="^#[0-9A-Fa-f]{6}$"
+                                                   style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; font-family: monospace;"
+                                                   onchange="updateColorPreview(this)"
+                                                   oninput="updateColorPreview(this)">
+                                            <div class="color-preview" style="width: 45px; height: 45px; border-radius: 8px; border: 2px solid #ddd; background-color: #CCCCCC; box-shadow: 0 2px 4px rgba(0,0,0,0.1); flex-shrink: 0;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 12px; align-items: end;">
+                                    <div>
+                                        <label style="display: block; font-size: 12px; font-weight: 600; color: #555; margin-bottom: 5px;">Stock Quantity</label>
+                                        <input type="number" 
+                                               name="color_stock" 
+                                               placeholder="0"
+                                               min="0"
+                                               value="0"
+                                               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px;">
+                                    </div>
+                                    <div>
+                                        <label style="display: block; font-size: 12px; font-weight: 600; color: #555; margin-bottom: 5px;">Status</label>
+                                        <label style="display: flex; align-items: center; gap: 8px; padding: 10px; background: white; border: 1px solid #ddd; border-radius: 6px; cursor: pointer;">
+                                            <input type="checkbox" 
+                                                   name="color_available" 
+                                                   checked
+                                                   style="width: 18px; height: 18px; cursor: pointer;">
+                                            <span style="font-size: 14px; font-weight: 500;">Available</span>
+                                        </label>
+                                    </div>
+                                    <button type="button" class="btn btn-sm btn-danger" onclick="removeColor(this)" style="padding: 10px 16px; height: 45px; display: flex; align-items: center; gap: 5px;">
+                                        <span style="font-size: 16px;">✖</span>
+                                        <span>Remove</span>
+                                    </button>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <button type="button" class="btn btn-sm btn-secondary" onclick="addColor()" style="margin-top: 15px; padding: 10px 20px; font-size: 14px;">
+                        <span class="icon">➕</span> Add Color Variant
+                    </button>
+                </div>
+
                 <!-- Product Attributes -->
                 <div class="form-section">
                     <h3>Product Attributes</h3>
-                    <p><small>Add custom attributes like material, size, color, etc.</small></p>
+                    <p><small>Add custom attributes like material, size, etc.</small></p>
                     
                     <div id="attributes-container">
                         {% if product and product.attributes %}
@@ -216,33 +326,42 @@
                     </button>
                 </div>
 
-                <!-- Product Image -->
+                <!-- Product Images (Up to 6) -->
                 <div class="form-section">
-                    <h3>Product Image</h3>
+                    <h3>Product Images</h3>
+                    <p><small>Upload up to 6 images for this product</small></p>
                     
-                    {% if product and product.images and product.images[0] %}
-                        <div class="current-image">
-                            <p><strong>Current Image:</strong></p>
-                            <img src="{{ url_for('static', filename='../' + product.images[0]) }}" 
-                                 alt="{{ product.title }}"
-                                 style="max-width: 200px; border-radius: 8px;"
-                                 onerror="this.style.display='none'">
+                    {% if product and product.images %}
+                        <div class="current-images" style="margin-bottom: 20px;">
+                            <p><strong>Current Images:</strong></p>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px;">
+                                {% for img in product.images %}
+                                    <div style="position: relative;">
+                                        <img src="{{ url_for('static', filename='../' + img) }}" 
+                                             alt="Product image"
+                                             style="width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 8px;"
+                                             onerror="this.style.display='none'">
+                                        <small style="display: block; margin-top: 4px; font-size: 10px; color: #666;">Image {{ loop.index }}</small>
+                                    </div>
+                                {% endfor %}
+                            </div>
                         </div>
                     {% endif %}
                     
                     <div class="form-group">
-                        <label for="image">{% if product %}Upload New Image{% else %}Product Image{% endif %}</label>
+                        <label for="images">{% if product %}Upload New Images (Replace All){% else %}Product Images{% endif %}</label>
                         <input type="file" 
-                               id="image" 
-                               name="image" 
+                               id="images" 
+                               name="images" 
                                accept="image/*"
-                               onchange="previewImage(this)">
-                        <small>Supported formats: PNG, JPG, JPEG, GIF, WEBP (Max 5MB)</small>
+                               multiple
+                               onchange="previewMultipleImages(this)">
+                        <small>Select up to 6 images. Supported: PNG, JPG, JPEG, GIF, WEBP (Max 5MB each)</small>
                     </div>
 
-                    <div id="image-preview" style="display: none;">
+                    <div id="images-preview" style="display: none; margin-top: 15px;">
                         <p><strong>Preview:</strong></p>
-                        <img id="preview-img" src="" alt="Preview" style="max-width: 200px; border-radius: 8px;">
+                        <div id="preview-container" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px;"></div>
                     </div>
                 </div>
             </div>

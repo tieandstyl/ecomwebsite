@@ -224,12 +224,34 @@ def products():
 def add_product():
     """Add a new product"""
     if request.method == 'POST':
+        # Auto-generate Product ID
+        all_products = utils.get_all_products()
+        max_id_number = 0
+        for prod in all_products:
+            if prod['id'].startswith('prod-'):
+                try:
+                    num = int(prod['id'].split('-')[-1])
+                    max_id_number = max(max_id_number, num)
+                except:
+                    pass
+        new_id = f'prod-{str(max_id_number + 1).zfill(3)}'
+        
+        # Auto-generate SKU from title
+        title = request.form.get('title', '')
+        words = title.upper().split()
+        if len(words) >= 2:
+            sku = words[0][:4] + '-' + words[1][:3] + '-' + str(max_id_number + 1).zfill(3)
+        elif len(words) == 1:
+            sku = words[0][:7] + '-' + str(max_id_number + 1).zfill(3)
+        else:
+            sku = 'PROD-' + str(max_id_number + 1).zfill(3)
+        
         # Get form data
         product_data = {
-            'id': request.form.get('id'),
-            'sku': request.form.get('sku'),
-            'title': request.form.get('title'),
-            'slug': utils.generate_slug(request.form.get('title', '')),
+            'id': new_id,
+            'sku': sku,
+            'title': title,
+            'slug': utils.generate_slug(title),
             'categoryIds': request.form.getlist('categoryIds'),
             'subcategoryId': request.form.get('subcategoryId'),
             'price': float(request.form.get('price', 0)),
@@ -240,8 +262,7 @@ def add_product():
             'attributes': {},
             'shortDescription': request.form.get('shortDescription', ''),
             'description': request.form.get('description', ''),
-            'tags': [tag.strip() for tag in request.form.get('tags', '').split(',') if tag.strip()],
-            'taxRatePct': float(request.form.get('taxRatePct', 5))
+            'tags': [tag.strip() for tag in request.form.get('tags', '').split(',') if tag.strip()]
         }
         
         # Handle attributes (dynamic fields)
@@ -251,24 +272,60 @@ def add_product():
             if key and value:
                 product_data['attributes'][key] = value
         
-        # Handle image upload
-        if 'image' in request.files:
-            file = request.files['image']
-            if file.filename:
-                # Determine subfolder based on category
-                category_slug = ''
-                if product_data['subcategoryId']:
-                    subcats = utils.get_all_subcategories()
-                    for sc in subcats:
-                        if sc['id'] == product_data['subcategoryId']:
-                            category_slug = sc['slug']
-                            break
+        # Handle color variants (dynamic fields)
+        color_names = request.form.getlist('color_name')
+        color_hexes = request.form.getlist('color_hex')
+        color_stocks = request.form.getlist('color_stock')
+        color_availables = request.form.getlist('color_available')
+        
+        colors = []
+        color_count = 0
+        for i, (name, hex_val) in enumerate(zip(color_names, color_hexes)):
+            if name and hex_val:
+                # Checkbox is checked if 'on' appears in the availables list at the same position
+                is_available = 'on' in color_availables[color_count:color_count+1] if color_count < len(color_availables) else False
                 
-                # Save to assets/products/category-slug/ with product slug as filename
-                product_slug = product_data['slug']
-                image_path = save_uploaded_file(file, f'products/{category_slug}', use_image_dir=False, custom_filename=product_slug)
-                if image_path:
-                    product_data['images'] = [image_path]
+                color_data = {
+                    'name': name.strip(),
+                    'hex': hex_val.strip(),
+                    'stock': int(color_stocks[i]) if i < len(color_stocks) and color_stocks[i] else 0,
+                    'available': is_available
+                }
+                colors.append(color_data)
+                color_count += 1
+        
+        if colors:
+            product_data['colors'] = colors
+        
+        # Handle multiple image uploads (up to 6)
+        if 'images' in request.files:
+            files = request.files.getlist('images')
+            uploaded_images = []
+            
+            # Limit to 6 images
+            files = files[:6]
+            
+            # Determine subfolder based on category
+            category_slug = ''
+            if product_data['subcategoryId']:
+                subcats = utils.get_all_subcategories()
+                for sc in subcats:
+                    if sc['id'] == product_data['subcategoryId']:
+                        category_slug = sc['slug']
+                        break
+            
+            product_slug = product_data['slug']
+            
+            for index, file in enumerate(files):
+                if file.filename:
+                    # Save each image with numbered suffix
+                    custom_filename = f'{product_slug}-{index+1}' if index > 0 else product_slug
+                    image_path = save_uploaded_file(file, f'products/{category_slug}', use_image_dir=False, custom_filename=custom_filename)
+                    if image_path:
+                        uploaded_images.append(image_path)
+            
+            if uploaded_images:
+                product_data['images'] = uploaded_images
         
         # Save the product
         if utils.save_product(product_data, is_new=True):
@@ -296,8 +353,7 @@ def edit_product(product_id):
         return redirect(url_for('products'))
     
     if request.method == 'POST':
-        # Update product data
-        product['sku'] = request.form.get('sku')
+        # Update product data (keep original ID and SKU)
         product['title'] = request.form.get('title')
         product['slug'] = utils.generate_slug(request.form.get('title', ''))
         product['categoryIds'] = request.form.getlist('categoryIds')
@@ -309,7 +365,10 @@ def edit_product(product_id):
         product['shortDescription'] = request.form.get('shortDescription', '')
         product['description'] = request.form.get('description', '')
         product['tags'] = [tag.strip() for tag in request.form.get('tags', '').split(',') if tag.strip()]
-        product['taxRatePct'] = float(request.form.get('taxRatePct', 5))
+        
+        # Remove taxRatePct if it exists
+        if 'taxRatePct' in product:
+            del product['taxRatePct']
         
         # Update attributes
         product['attributes'] = {}
@@ -319,15 +378,46 @@ def edit_product(product_id):
             if key and value:
                 product['attributes'][key] = value
         
-        # Handle image upload (if new image provided)
-        if 'image' in request.files:
-            file = request.files['image']
-            if file.filename:
+        # Update color variants
+        color_names = request.form.getlist('color_name')
+        color_hexes = request.form.getlist('color_hex')
+        color_stocks = request.form.getlist('color_stock')
+        color_availables = request.form.getlist('color_available')
+        
+        colors = []
+        color_count = 0
+        for i, (name, hex_val) in enumerate(zip(color_names, color_hexes)):
+            if name and hex_val:
+                # Checkbox is checked if 'on' appears in the availables list at the same position
+                is_available = 'on' in color_availables[color_count:color_count+1] if color_count < len(color_availables) else False
+                
+                color_data = {
+                    'name': name.strip(),
+                    'hex': hex_val.strip(),
+                    'stock': int(color_stocks[i]) if i < len(color_stocks) and color_stocks[i] else 0,
+                    'available': is_available
+                }
+                colors.append(color_data)
+                color_count += 1
+        
+        if colors:
+            product['colors'] = colors
+        else:
+            # Remove colors if none provided
+            if 'colors' in product:
+                del product['colors']
+        
+        # Handle multiple image uploads (if new images provided)
+        if 'images' in request.files:
+            files = request.files.getlist('images')
+            # Check if any file was actually selected
+            if any(file.filename for file in files):
                 # Delete old images first
                 if product.get('images'):
                     for old_image in product['images']:
                         delete_image_file(old_image)
                 
+                # Determine subfolder based on category
                 category_slug = ''
                 if product['subcategoryId']:
                     subcats = utils.get_all_subcategories()
@@ -336,11 +426,23 @@ def edit_product(product_id):
                             category_slug = sc['slug']
                             break
                 
-                # Save to assets/products/category-slug/ with product slug as filename
+                # Upload new images (up to 6)
+                uploaded_images = []
                 product_slug = product['slug']
-                image_path = save_uploaded_file(file, f'products/{category_slug}', use_image_dir=False, custom_filename=product_slug)
-                if image_path:
-                    product['images'] = [image_path]
+                
+                # Limit to 6 images
+                files = files[:6]
+                
+                for index, file in enumerate(files):
+                    if file.filename:
+                        # Save each image with numbered suffix
+                        custom_filename = f'{product_slug}-{index+1}' if index > 0 else product_slug
+                        image_path = save_uploaded_file(file, f'products/{category_slug}', use_image_dir=False, custom_filename=custom_filename)
+                        if image_path:
+                            uploaded_images.append(image_path)
+                
+                if uploaded_images:
+                    product['images'] = uploaded_images
         
         # Save the updated product
         if utils.save_product(product, is_new=False):

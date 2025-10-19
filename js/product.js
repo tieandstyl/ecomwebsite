@@ -109,6 +109,7 @@
             <div class="w-20 h-20 bg-gray-200 rounded-lg bg-cover bg-center" style="background-image: url('${item.image || ''}')"></div>
             <div class="flex-1">
               <h3 class="font-bold">${item.title}</h3>
+              ${item.color ? `<p class="text-xs text-gray-600">Color: ${item.color}</p>` : ''}
               <p class="text-primary text-sm">${money(item.price)}</p>
               <div class="flex items-center gap-2 mt-2">
                 <button class="w-8 h-8 border border-primary/30 rounded hover:bg-primary/20" onclick="updateCartQty('${item.sku}', -1)">-</button>
@@ -431,18 +432,18 @@
     const colorOptions = document.getElementById('colorOptions');
     if (product.colors && product.colors.length > 0) {
       colorContainer.style.display = 'block';
-      colorOptions.innerHTML = product.colors.map(color => {
-        const colorHex = getColorHex(color);
+      colorOptions.innerHTML = product.colors.filter(c => c.available).map(color => {
+        const colorHex = color.hex || getColorHex(color.name);
         return `
           <button 
             class="color-option w-12 h-12 rounded-full border-2 border-gray-300 hover:border-primary transition-all relative group"
-            style="background-color: ${colorHex};"
-            data-color="${color}"
-            onclick="selectColor('${color}')"
-            title="${color}"
+            style="background-color: ${colorHex}; ${colorHex === '#FFFFFF' || colorHex === '#F9FAFB' ? 'border-color: #D1D5DB;' : ''}"
+            data-color="${color.name}"
+            onclick="selectColor('${color.name}')"
+            title="${color.name}"
           >
             <span class="absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-xs text-black dark:text-white opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-              ${color}
+              ${color.name}
             </span>
           </button>
         `;

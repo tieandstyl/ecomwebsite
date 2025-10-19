@@ -87,7 +87,10 @@
         <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-20 sm:size-24 flex-shrink-0" style="background-image: url('${item.image || 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'%23ddd\' viewBox=\'0 0 24 24\'%3E%3Cpath d=\'M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z\'/%3E%3C/svg%3E'}')"></div>
         <div class="flex-1 min-w-0 w-full">
           <div class="flex items-start justify-between gap-2 mb-2">
-            <h3 class="font-bold text-base sm:text-lg line-clamp-2 flex-1">${item.title}</h3>
+            <div class="flex-1">
+              <h3 class="font-bold text-base sm:text-lg line-clamp-2">${item.title}</h3>
+              ${item.color ? `<p class="text-xs text-gray-600 dark:text-gray-400 mt-1">Color: <span class="font-medium">${item.color}</span></p>` : ''}
+            </div>
             <p class="font-bold text-lg text-primary whitespace-nowrap">${money(item.price * item.quantity)}</p>
           </div>
           <p class="text-primary text-sm mb-3">${money(item.price)} each</p>

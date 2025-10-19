@@ -59,6 +59,7 @@
         <div class="w-20 h-20 bg-cover bg-center rounded-lg flex-shrink-0" style="background-image: url('${item.image || 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'%23ddd\' viewBox=\'0 0 24 24\'%3E%3Cpath d=\'M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z\'/%3E%3C/svg%3E'}');"></div>
         <div class="flex-grow">
           <p class="font-medium">${item.title}</p>
+          ${item.color ? `<p class="text-xs text-gray-600 dark:text-gray-400">Color: <span class="font-medium">${item.color}</span></p>` : ''}
           <p class="text-sm text-subtle-light dark:text-subtle-dark">Quantity: ${item.quantity}</p>
           <p class="text-sm text-primary font-semibold mt-1">${money(item.price)} each</p>
         </div>
@@ -200,6 +201,9 @@
     
     cart.forEach((item, index) => {
       msg += `${index + 1}. ${item.title}\n`;
+      if (item.color) {
+        msg += `   Color: ${item.color}\n`;
+      }
       msg += `   Qty: ${item.quantity} × ${money(item.price)} = ${money(item.price * item.quantity)}\n`;
     });
     

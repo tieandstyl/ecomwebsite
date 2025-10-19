@@ -15,6 +15,26 @@
     "images": [
       "assets/products/scrunchies/skinny.png"
     ],
+    "colors": [
+      {
+        "name": "Red",
+        "hex": "#FF0000",
+        "stock": 30,
+        "available": true
+      },
+      {
+        "name": "Blue",
+        "hex": "#0000FF",
+        "stock": 25,
+        "available": true
+      },
+      {
+        "name": "Black",
+        "hex": "#000000",
+        "stock": 45,
+        "available": true
+      }
+    ],
     "attributes": {
       "material": "Soft Fabric",
       "size": "Small"
@@ -26,7 +46,6 @@
       "skinny",
       "minimal"
     ],
-    "taxRatePct": 5.0,
     "createdAt": "2025-10-14T16:00:00Z",
     "updatedAt": "2025-10-19T13:28:30.030613Z"
   },
@@ -46,6 +65,26 @@
     "images": [
       "assets/products/scrunchies/plain.png"
     ],
+    "colors": [
+      {
+        "name": "White",
+        "hex": "#FFFFFF",
+        "stock": 50,
+        "available": true
+      },
+      {
+        "name": "Pink",
+        "hex": "#FFC0CB",
+        "stock": 40,
+        "available": true
+      },
+      {
+        "name": "Beige",
+        "hex": "#F5F5DC",
+        "stock": 60,
+        "available": true
+      }
+    ],
     "attributes": {
       "material": "Cotton Blend",
       "size": "Medium"
@@ -57,7 +96,6 @@
       "plain",
       "classic"
     ],
-    "taxRatePct": 5,
     "createdAt": "2025-10-14T16:00:00Z",
     "updatedAt": "2025-10-14T16:00:00Z"
   },
@@ -77,6 +115,26 @@
     "images": [
       "assets/products/scrunchies/printed.png"
     ],
+    "colors": [
+      {
+        "name": "Floral Pink",
+        "hex": "#FFB6C1",
+        "stock": 40,
+        "available": true
+      },
+      {
+        "name": "Floral Blue",
+        "hex": "#ADD8E6",
+        "stock": 35,
+        "available": true
+      },
+      {
+        "name": "Abstract Multi",
+        "hex": "#FFD700",
+        "stock": 45,
+        "available": true
+      }
+    ],
     "attributes": {
       "material": "Premium Fabric",
       "pattern": "Floral/Abstract",
@@ -89,7 +147,6 @@
       "printed",
       "colorful"
     ],
-    "taxRatePct": 5,
     "createdAt": "2025-10-14T16:00:00Z",
     "updatedAt": "2025-10-14T16:00:00Z"
   },
@@ -109,6 +166,26 @@
     "images": [
       "assets/products/scrunchies/charm.png"
     ],
+    "colors": [
+      {
+        "name": "Gold Charm",
+        "hex": "#FFD700",
+        "stock": 25,
+        "available": true
+      },
+      {
+        "name": "Silver Charm",
+        "hex": "#C0C0C0",
+        "stock": 30,
+        "available": true
+      },
+      {
+        "name": "Rose Gold",
+        "hex": "#B76E79",
+        "stock": 25,
+        "available": true
+      }
+    ],
     "attributes": {
       "material": "Satin",
       "decoration": "Charm/Bow",
@@ -122,7 +199,6 @@
       "bow",
       "elegant"
     ],
-    "taxRatePct": 5,
     "createdAt": "2025-10-14T16:00:00Z",
     "updatedAt": "2025-10-14T16:00:00Z"
   },
@@ -142,6 +218,26 @@
     "images": [
       "assets/products/scrunchies/tulip.png"
     ],
+    "colors": [
+      {
+        "name": "Purple",
+        "hex": "#800080",
+        "stock": 20,
+        "available": true
+      },
+      {
+        "name": "Lavender",
+        "hex": "#E6E6FA",
+        "stock": 20,
+        "available": true
+      },
+      {
+        "name": "Burgundy",
+        "hex": "#800020",
+        "stock": 20,
+        "available": true
+      }
+    ],
     "attributes": {
       "material": "Premium Satin",
       "design": "Tulip-shaped",
@@ -155,7 +251,6 @@
       "premium",
       "unique"
     ],
-    "taxRatePct": 5,
     "createdAt": "2025-10-14T16:00:00Z",
     "updatedAt": "2025-10-14T16:00:00Z"
   },
@@ -175,6 +270,26 @@
     "images": [
       "assets/products/scrunchies/bunny.png"
     ],
+    "colors": [
+      {
+        "name": "Cream",
+        "hex": "#FFFDD0",
+        "stock": 30,
+        "available": true
+      },
+      {
+        "name": "Gray",
+        "hex": "#808080",
+        "stock": 30,
+        "available": true
+      },
+      {
+        "name": "Brown",
+        "hex": "#A52A2A",
+        "stock": 30,
+        "available": true
+      }
+    ],
     "attributes": {
       "material": "Soft Fabric",
       "decoration": "Bunny Tail/Mini Tail",
@@ -188,7 +303,6 @@
       "cute",
       "playful"
     ],
-    "taxRatePct": 5,
     "createdAt": "2025-10-14T16:00:00Z",
     "updatedAt": "2025-10-14T16:00:00Z"
   },
@@ -208,6 +322,26 @@
     "images": [
       "assets/products/bow-clips/mini.png"
     ],
+    "colors": [
+      {
+        "name": "Red",
+        "hex": "#FF0000",
+        "stock": 35,
+        "available": true
+      },
+      {
+        "name": "Yellow",
+        "hex": "#FFFF00",
+        "stock": 30,
+        "available": true
+      },
+      {
+        "name": "Green",
+        "hex": "#008000",
+        "stock": 35,
+        "available": true
+      }
+    ],
     "attributes": {
       "fabric": "Cotton",
       "size": "Mini",
@@ -221,7 +355,6 @@
       "handmade",
       "cute"
     ],
-    "taxRatePct": 5,
     "createdAt": "2025-10-14T16:00:00Z",
     "updatedAt": "2025-10-14T16:00:00Z"
   },
@@ -241,6 +374,26 @@
     "images": [
       "assets/products/bow-clips/bunny.png"
     ],
+    "colors": [
+      {
+        "name": "White",
+        "hex": "#FFFFFF",
+        "stock": 25,
+        "available": true
+      },
+      {
+        "name": "Pastel Pink",
+        "hex": "#FFD1DC",
+        "stock": 25,
+        "available": true
+      },
+      {
+        "name": "Pastel Blue",
+        "hex": "#AEC6CF",
+        "stock": 25,
+        "available": true
+      }
+    ],
     "attributes": {
       "fabric": "Satin Blend",
       "design": "Bunny Tail",
@@ -254,7 +407,6 @@
       "handmade",
       "playful"
     ],
-    "taxRatePct": 5,
     "createdAt": "2025-10-14T16:00:00Z",
     "updatedAt": "2025-10-14T16:00:00Z"
   },
@@ -274,6 +426,26 @@
     "images": [
       "assets/products/bow-clips/double.png"
     ],
+    "colors": [
+      {
+        "name": "Navy Blue",
+        "hex": "#000080",
+        "stock": 22,
+        "available": true
+      },
+      {
+        "name": "Maroon",
+        "hex": "#800000",
+        "stock": 22,
+        "available": true
+      },
+      {
+        "name": "Emerald",
+        "hex": "#50C878",
+        "stock": 21,
+        "available": true
+      }
+    ],
     "attributes": {
       "fabric": "Premium Satin",
       "design": "Double Layered",
@@ -287,7 +459,6 @@
       "handmade",
       "elegant"
     ],
-    "taxRatePct": 5,
     "createdAt": "2025-10-14T16:00:00Z",
     "updatedAt": "2025-10-14T16:00:00Z"
   },
@@ -307,6 +478,26 @@
     "images": [
       "assets/products/bow-clips/simple.png"
     ],
+    "colors": [
+      {
+        "name": "Black",
+        "hex": "#000000",
+        "stock": 30,
+        "available": true
+      },
+      {
+        "name": "White",
+        "hex": "#FFFFFF",
+        "stock": 28,
+        "available": true
+      },
+      {
+        "name": "Red",
+        "hex": "#FF0000",
+        "stock": 27,
+        "available": true
+      }
+    ],
     "attributes": {
       "fabric": "Cotton Blend",
       "design": "Classic Bow",
@@ -320,7 +511,6 @@
       "handmade",
       "classic"
     ],
-    "taxRatePct": 5,
     "createdAt": "2025-10-14T16:00:00Z",
     "updatedAt": "2025-10-14T16:00:00Z"
   },
@@ -340,6 +530,26 @@
     "images": [
       "assets/products/bow-clips/tulip.png"
     ],
+    "colors": [
+      {
+        "name": "Champagne",
+        "hex": "#F7E7CE",
+        "stock": 13,
+        "available": true
+      },
+      {
+        "name": "Ivory",
+        "hex": "#FFFFF0",
+        "stock": 14,
+        "available": true
+      },
+      {
+        "name": "Deep Purple",
+        "hex": "#663399",
+        "stock": 13,
+        "available": true
+      }
+    ],
     "attributes": {
       "fabric": "Premium Silk",
       "design": "Tulip-shaped",
@@ -354,7 +564,6 @@
       "premium",
       "luxury"
     ],
-    "taxRatePct": 5,
     "createdAt": "2025-10-14T16:00:00Z",
     "updatedAt": "2025-10-14T16:00:00Z"
   }
