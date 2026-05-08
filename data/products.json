@@ -11826,5 +11826,148 @@
     ],
     "createdAt": "2026-04-27T05:03:07.777507Z",
     "updatedAt": "2026-04-27T05:03:07.777903Z"
+  },
+  {
+    "id": "prod-133",
+    "sku": "GLID-PET-133",
+    "title": "Glided Petals Claw Clip",
+    "slug": "glided-petals-claw-clip",
+    "categoryIds": [
+      "cat-08"
+    ],
+    "subcategoryId": "subcat-pin-46",
+    "price": 120.0,
+    "currency": "INR",
+    "stock": 23,
+    "available": true,
+    "images": [
+      "assets/products/glided-petal-claw-clips/glided-petals-claw-clip.jpeg",
+      "assets/products/glided-petal-claw-clips/glided-petals-claw-clip-2.jpeg",
+      "assets/products/glided-petal-claw-clips/glided-petals-claw-clip-3.jpeg"
+    ],
+    "attributes": {},
+    "shortDescription": "Golden bloom! This bar-shaped claw clip adds a touch of floral sophistication.",
+    "description": "",
+    "tags": [],
+    "sizes": [
+      "large"
+    ],
+    "createdAt": "2026-05-08T09:44:34.297331Z",
+    "updatedAt": "2026-05-08T11:30:49.027475Z",
+    "colors": [
+      {
+        "name": "1",
+        "hex": "#A3C8D2",
+        "stock": 4,
+        "available": true
+      },
+      {
+        "name": "2",
+        "hex": "#00CED1",
+        "stock": 4,
+        "available": true
+      },
+      {
+        "name": "3",
+        "hex": "#FFF9D6",
+        "stock": 4,
+        "available": true
+      },
+      {
+        "name": "4",
+        "hex": "#EEBEBE",
+        "stock": 2,
+        "available": true
+      },
+      {
+        "name": "5",
+        "hex": "#00CED1",
+        "stock": 3,
+        "available": true
+      },
+      {
+        "name": "6",
+        "hex": "#FFD6EB",
+        "stock": 4,
+        "available": true
+      },
+      {
+        "name": "7",
+        "hex": "#AA1818",
+        "stock": 4,
+        "available": true
+      },
+      {
+        "name": "8",
+        "hex": "#C1838A",
+        "stock": 4,
+        "available": true
+      }
+    ]
+  },
+  {
+    "id": "prod-134",
+    "sku": "PETA-DUO-134",
+    "title": "petal duo claw clip",
+    "slug": "petal-duo-claw-clip",
+    "categoryIds": [
+      "cat-07"
+    ],
+    "subcategoryId": "subcat-kor-44",
+    "price": 70.0,
+    "currency": "INR",
+    "stock": 24,
+    "available": true,
+    "images": [
+      "assets/products/petal-duo/petal-duo-claw-clip.jpeg",
+      "assets/products/petal-duo/petal-duo-claw-clip-2.jpeg"
+    ],
+    "attributes": {},
+    "shortDescription": "Petal Duo! A unique double-flower claw clip designed for a blooming, stylish look.",
+    "description": "",
+    "tags": [],
+    "sizes": [
+      "Small"
+    ],
+    "colors": [
+      {
+        "name": "1",
+        "hex": "#DFDDFD",
+        "stock": 4,
+        "available": true
+      },
+      {
+        "name": "2",
+        "hex": "#70B1C7",
+        "stock": 4,
+        "available": true
+      },
+      {
+        "name": "3",
+        "hex": "#6B588E",
+        "stock": 4,
+        "available": true
+      },
+      {
+        "name": "4",
+        "hex": "#93B1E1",
+        "stock": 4,
+        "available": true
+      },
+      {
+        "name": "5",
+        "hex": "#DCB2BE",
+        "stock": 4,
+        "available": true
+      },
+      {
+        "name": "6",
+        "hex": "#547DB5",
+        "stock": 4,
+        "available": true
+      }
+    ],
+    "createdAt": "2026-05-08T11:27:08.186833Z",
+    "updatedAt": "2026-05-08T11:27:08.187294Z"
   }
 ]

@@ -1132,5 +1132,23 @@
     "parentCategoryId": "cat-08",
     "order": 1,
     "active": true
+  },
+  {
+    "id": "subcat-pin-46",
+    "name": "Glided Petals Claw Clips",
+    "slug": "glided-petals-claw-clips",
+    "description": "Gilded Petals! A sleek, bar-shaped claw clip featuring elegant floral accents",
+    "parentCategoryId": "cat-08",
+    "order": 1,
+    "active": true
+  },
+  {
+    "id": "subcat-kor-44",
+    "name": "Petal Duo Claw Clip",
+    "slug": "petal-duo-claw-clip",
+    "description": "Twice the charm! This double-flower shaped claw clip adds a floral pop to your hair.",
+    "parentCategoryId": "cat-07",
+    "order": 1,
+    "active": true
   }
 ]
