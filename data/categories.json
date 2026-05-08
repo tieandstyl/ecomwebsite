@@ -1,15 +1,5 @@
 [
   {
-    "id": "cat-04",
-    "name": "Hamper Boxes",
-    "slug": "hamper-boxes",
-    "description": "The \"Premium Quality\" Vibe\r\nElevate your presentation with our luxury Hamper Boxes. Featuring a sophisticated finish and durable construction, they are the perfect canvas for bespoke gifting, corporate sets, or special celebrations.",
-    "image": "assets/categories/hamper-boxes.jpeg",
-    "parentId": null,
-    "order": 4,
-    "active": true
-  },
-  {
     "id": "cat-05",
     "name": "Scrunchies",
     "slug": "scrunchies",
