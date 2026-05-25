@@ -6408,7 +6408,7 @@
     "subcategoryId": "subcat-kor-12",
     "price": 20.0,
     "currency": "INR",
-    "stock": 5,
+    "stock": 3,
     "available": true,
     "images": [
       "assets/products/mini-hearts-claw-clip/mini-hearts-claw-clip.jpeg"
@@ -6419,12 +6419,6 @@
     "tags": [],
     "colors": [
       {
-        "name": "Grey",
-        "hex": "#5A5343",
-        "stock": 1,
-        "available": true
-      },
-      {
         "name": "Red",
         "hex": "#C74848",
         "stock": 1,
@@ -6433,7 +6427,7 @@
       {
         "name": "Brown",
         "hex": "#CC8C1E",
-        "stock": 2,
+        "stock": 1,
         "available": true
       },
       {
@@ -6444,7 +6438,7 @@
       }
     ],
     "createdAt": "2025-12-30T09:39:13.650079Z",
-    "updatedAt": "2026-04-25T08:21:47.939909Z"
+    "updatedAt": "2026-05-25T14:04:35.456485Z"
   },
   {
     "id": "prod-033",
@@ -6587,7 +6581,7 @@
     "subcategoryId": "subcat-kor-15",
     "price": 20.0,
     "currency": "INR",
-    "stock": 47,
+    "stock": 46,
     "available": true,
     "images": [
       "assets/products/spiral-flora-claw-clip/spiral-flora-claw-clip.jpeg"
@@ -6612,7 +6606,7 @@
       {
         "name": "Coffe Brown",
         "hex": "#8E5527",
-        "stock": 5,
+        "stock": 4,
         "available": true
       },
       {
@@ -6665,7 +6659,7 @@
       }
     ],
     "createdAt": "2025-12-30T11:19:16.714709Z",
-    "updatedAt": "2026-04-03T10:53:13.657270Z"
+    "updatedAt": "2026-05-25T13:59:47.790126Z"
   },
   {
     "id": "prod-036",
@@ -6678,7 +6672,7 @@
     "subcategoryId": "subcat-kor-16",
     "price": 20.0,
     "currency": "INR",
-    "stock": 15,
+    "stock": 14,
     "available": true,
     "images": [
       "assets/products/loop-claw-clip/loop-claw-clip.jpeg"
@@ -6703,12 +6697,12 @@
       {
         "name": "Honey",
         "hex": "#C28D42",
-        "stock": 4,
+        "stock": 3,
         "available": true
       }
     ],
     "createdAt": "2025-12-30T11:35:01.213154Z",
-    "updatedAt": "2026-04-27T05:06:07.251256Z"
+    "updatedAt": "2026-05-25T14:06:49.408742Z"
   },
   {
     "id": "prod-037",
@@ -6721,7 +6715,7 @@
     "subcategoryId": "subcat-kor-17",
     "price": 25.0,
     "currency": "INR",
-    "stock": 15,
+    "stock": 14,
     "available": true,
     "images": [
       "assets/products/twine-claw-clip/twine-claw-clip.jpeg"
@@ -6734,7 +6728,7 @@
       {
         "name": "Orange",
         "hex": "#D74E14",
-        "stock": 7,
+        "stock": 6,
         "available": true
       },
       {
@@ -6757,7 +6751,7 @@
       }
     ],
     "createdAt": "2025-12-30T11:49:33.071902Z",
-    "updatedAt": "2026-04-27T05:07:30.532438Z"
+    "updatedAt": "2026-05-25T14:06:08.429820Z"
   },
   {
     "id": "prod-038",
@@ -6770,7 +6764,7 @@
     "subcategoryId": "subcat-kor-18",
     "price": 20.0,
     "currency": "INR",
-    "stock": 14,
+    "stock": 13,
     "available": true,
     "images": [
       "assets/products/small-twirl-claw-clip/small-twirl-claw-clip.jpeg"
@@ -6806,7 +6800,7 @@
       }
     ],
     "createdAt": "2025-12-30T12:43:30.509174Z",
-    "updatedAt": "2026-03-31T10:46:06.280237Z"
+    "updatedAt": "2026-05-25T14:05:20.326109Z"
   },
   {
     "id": "prod-039",
@@ -6947,7 +6941,7 @@
     "subcategoryId": "subcat-kor-21",
     "price": 20.0,
     "currency": "INR",
-    "stock": 104,
+    "stock": 99,
     "available": true,
     "images": [
       "assets/products/bali-claw-clip/bali-claw-clip.jpeg",
@@ -6961,13 +6955,13 @@
       {
         "name": "Purple",
         "hex": "#7567A8",
-        "stock": 6,
+        "stock": 5,
         "available": true
       },
       {
         "name": "Mint",
         "hex": "#A8C48D",
-        "stock": 16,
+        "stock": 15,
         "available": true
       },
       {
@@ -7003,19 +6997,19 @@
       {
         "name": "Sky Blue",
         "hex": "#55BCC3",
-        "stock": 4,
+        "stock": 5,
         "available": true
       },
       {
         "name": "Light Orange",
         "hex": "#ECC789",
-        "stock": 9,
+        "stock": 8,
         "available": true
       },
       {
         "name": "Dark Pink",
         "hex": "#E46799",
-        "stock": 5,
+        "stock": 4,
         "available": true
       },
       {
@@ -7026,7 +7020,7 @@
       }
     ],
     "createdAt": "2025-12-30T14:08:04.202968Z",
-    "updatedAt": "2026-03-24T05:33:34.967623Z"
+    "updatedAt": "2026-05-25T13:52:58.672573Z"
   },
   {
     "id": "prod-043",
@@ -7659,61 +7653,6 @@
     "updatedAt": "2026-04-08T12:19:51.363355Z"
   },
   {
-    "id": "prod-053",
-    "sku": "LUNA-CLA-053",
-    "title": "Luna Claw Clip",
-    "slug": "luna-claw-clip",
-    "categoryIds": [
-      "cat-07"
-    ],
-    "subcategoryId": "subcat-kor-32",
-    "price": 25.0,
-    "currency": "INR",
-    "stock": 11,
-    "available": true,
-    "images": [
-      "assets/products/luna-claw-clip/luna-claw-clip.jpeg"
-    ],
-    "attributes": {},
-    "shortDescription": "Elegant arch clips with a dual finish: high-shine glass on one side, chic matte on the other.",
-    "description": "",
-    "tags": [],
-    "colors": [
-      {
-        "name": "Purple",
-        "hex": "#B386A9",
-        "stock": 2,
-        "available": true
-      },
-      {
-        "name": "Blue",
-        "hex": "#8EC4C7",
-        "stock": 2,
-        "available": true
-      },
-      {
-        "name": "Grey",
-        "hex": "#C0C0C0",
-        "stock": 2,
-        "available": true
-      },
-      {
-        "name": "Light Orange",
-        "hex": "#EACDA4",
-        "stock": 3,
-        "available": true
-      },
-      {
-        "name": "Light Yellow",
-        "hex": "#E5E2C3",
-        "stock": 2,
-        "available": true
-      }
-    ],
-    "createdAt": "2025-12-31T10:12:22.595724Z",
-    "updatedAt": "2025-12-31T10:12:22.595810Z"
-  },
-  {
     "id": "prod-055",
     "sku": "BORD-FLO-055",
     "title": "Border Floral Claw Clip",
@@ -7925,7 +7864,7 @@
     "subcategoryId": "subcat-pin-03",
     "price": 89.0,
     "currency": "INR",
-    "stock": 9,
+    "stock": 8,
     "available": true,
     "images": [
       "assets/products/fruity-claw-clips/fruity-claw-clip.jpeg"
@@ -7938,7 +7877,7 @@
       {
         "name": "Peach",
         "hex": "#F1B1B1",
-        "stock": 3,
+        "stock": 2,
         "available": true
       },
       {
@@ -7949,7 +7888,7 @@
       }
     ],
     "createdAt": "2025-12-31T12:26:06.190675Z",
-    "updatedAt": "2026-03-14T07:11:12.954318Z"
+    "updatedAt": "2026-05-25T13:46:55.292887Z"
   },
   {
     "id": "prod-062",
@@ -7962,7 +7901,7 @@
     "subcategoryId": "subcat-pin-04",
     "price": 89.0,
     "currency": "INR",
-    "stock": 18,
+    "stock": 17,
     "available": true,
     "images": [
       "assets/products/rose-claw-clip/rose-claw-clip.jpeg"
@@ -7999,12 +7938,12 @@
       {
         "name": "Blue",
         "hex": "#94FDFF",
-        "stock": 4,
+        "stock": 3,
         "available": true
       }
     ],
     "createdAt": "2025-12-31T12:46:44.651517Z",
-    "updatedAt": "2026-04-03T10:42:21.539513Z"
+    "updatedAt": "2026-05-25T13:46:18.816709Z"
   },
   {
     "id": "prod-063",
@@ -9603,37 +9542,6 @@
     "updatedAt": "2026-04-14T06:46:07.053590Z"
   },
   {
-    "id": "prod-083",
-    "sku": "STRA-DAI-083",
-    "title": "Strawberry Daisy Cards",
-    "slug": "strawberry-daisy-cards",
-    "categoryIds": [
-      "cat-08"
-    ],
-    "subcategoryId": "subcat-pin-10",
-    "price": 90.0,
-    "currency": "INR",
-    "stock": 1,
-    "available": true,
-    "images": [
-      "assets/products/strawberry-daisy-cards/strawberry-daisy-cards.jpeg"
-    ],
-    "attributes": {},
-    "shortDescription": "Strawberry Daisy card! 3 glossy floral clips (2 small, 1 large) with a sweet berry print.",
-    "description": "",
-    "tags": [],
-    "colors": [
-      {
-        "name": "Yellow",
-        "hex": "#F2FF42",
-        "stock": 1,
-        "available": true
-      }
-    ],
-    "createdAt": "2026-01-11T06:59:44.202618Z",
-    "updatedAt": "2026-03-15T06:51:39.764741Z"
-  },
-  {
     "id": "prod-084",
     "sku": "DAIS-SNA-084",
     "title": "Daisy Snap Claw Clip",
@@ -9940,7 +9848,7 @@
     "subcategoryId": "subcat-kor-39",
     "price": 20.0,
     "currency": "INR",
-    "stock": 22,
+    "stock": 21,
     "available": true,
     "images": [
       "assets/products/flutter-matte-claw-clip/flutter-matte-claw-clip.jpeg"
@@ -10004,12 +9912,12 @@
       {
         "name": "Royal Blue",
         "hex": "#2B3C50",
-        "stock": 3,
+        "stock": 2,
         "available": true
       }
     ],
     "createdAt": "2026-01-17T08:30:42.938929Z",
-    "updatedAt": "2026-05-08T09:05:28.894569Z"
+    "updatedAt": "2026-05-25T13:58:29.802263Z"
   },
   {
     "id": "prod-089",
@@ -10960,7 +10868,7 @@
     "subcategoryId": "subcat-pin-36",
     "price": 60.0,
     "currency": "INR",
-    "stock": 20,
+    "stock": 19,
     "available": true,
     "images": [
       "assets/products/paw-sitive-claw-clip/paw-sitive-claw-clip.jpeg"
@@ -11006,12 +10914,12 @@
       {
         "name": "Honey Bear",
         "hex": "#F5F5DC",
-        "stock": 3,
+        "stock": 2,
         "available": true
       }
     ],
     "createdAt": "2026-03-10T07:13:04.661715Z",
-    "updatedAt": "2026-04-03T10:59:11.113387Z"
+    "updatedAt": "2026-05-25T13:55:39.416185Z"
   },
   {
     "id": "prod-119",
@@ -11024,7 +10932,7 @@
     "subcategoryId": "subcat-pin-37",
     "price": 70.0,
     "currency": "INR",
-    "stock": 19,
+    "stock": 18,
     "available": true,
     "images": [
       "assets/products/winged-whimsy-claw-clip/winged-whimsy-claw-clip.jpeg"
@@ -11058,7 +10966,7 @@
       {
         "name": "Lavender",
         "hex": "#D9BFD9",
-        "stock": 3,
+        "stock": 2,
         "available": true
       },
       {
@@ -11075,7 +10983,7 @@
       }
     ],
     "createdAt": "2026-03-10T07:36:55.284053Z",
-    "updatedAt": "2026-04-22T14:37:59.927751Z"
+    "updatedAt": "2026-05-25T13:56:33.088736Z"
   },
   {
     "id": "prod-120",
@@ -11088,7 +10996,7 @@
     "subcategoryId": "subcat--02",
     "price": 30.0,
     "currency": "INR",
-    "stock": 17,
+    "stock": 15,
     "available": true,
     "images": [
       "assets/products/heart-sprinkle-claw-clip/heart-sprinkle-claw-clip.jpeg"
@@ -11104,7 +11012,7 @@
       {
         "name": "Grey",
         "hex": "#D5D3CD",
-        "stock": 3,
+        "stock": 2,
         "available": true
       },
       {
@@ -11128,12 +11036,12 @@
       {
         "name": "White",
         "hex": "#FFFFFF",
-        "stock": 3,
+        "stock": 2,
         "available": true
       }
     ],
     "createdAt": "2026-03-10T07:46:51.039077Z",
-    "updatedAt": "2026-05-08T08:58:45.569130Z"
+    "updatedAt": "2026-05-25T14:08:07.885970Z"
   },
   {
     "id": "prod-121",
@@ -11246,7 +11154,7 @@
       }
     ],
     "createdAt": "2026-03-11T07:01:16.645225Z",
-    "updatedAt": "2026-04-12T11:35:13.480706Z"
+    "updatedAt": "2026-05-25T13:48:22.132570Z"
   },
   {
     "id": "prod-123",
