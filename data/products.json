@@ -11449,5 +11449,51 @@
     ],
     "createdAt": "2026-05-08T11:27:08.186833Z",
     "updatedAt": "2026-05-08T11:27:08.187294Z"
+  },
+  {
+    "id": "prod-135",
+    "sku": "SMAL-CLA-135",
+    "title": "Small Claw Scoops",
+    "slug": "small-claw-scoops",
+    "categoryIds": [
+      "cat-12"
+    ],
+    "subcategoryId": "subcat-luc-01",
+    "price": 299.0,
+    "currency": "INR",
+    "stock": 20,
+    "available": true,
+    "images": [
+      "assets/products/small-claw-scoops/small-claw-scoops.jpeg"
+    ],
+    "attributes": {},
+    "shortDescription": "Scoop mini luck! Get a surprise bundle of adorable, small-sized claw clips just for you.",
+    "description": "",
+    "tags": [],
+    "createdAt": "2026-05-27T06:41:17.954795Z",
+    "updatedAt": "2026-05-27T06:41:17.955443Z"
+  },
+  {
+    "id": "prod-136",
+    "sku": "LARG-CLA-136",
+    "title": "Large Claw Scoops",
+    "slug": "large-claw-scoops",
+    "categoryIds": [
+      "cat-12"
+    ],
+    "subcategoryId": "subcat-luc-02",
+    "price": 499.0,
+    "currency": "INR",
+    "stock": 20,
+    "available": true,
+    "images": [
+      "assets/products/large-claw-scoops/large-claw-scoops.jpeg"
+    ],
+    "attributes": {},
+    "shortDescription": "Scoop big luck! Get a fun mystery bundle of jumbo and large-sized statement claw clips.",
+    "description": "",
+    "tags": [],
+    "createdAt": "2026-05-27T06:47:40.632359Z",
+    "updatedAt": "2026-05-27T06:47:40.632781Z"
   }
 ]

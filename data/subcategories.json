@@ -1159,5 +1159,14 @@
     "parentCategoryId": "cat-12",
     "order": 1,
     "active": true
+  },
+  {
+    "id": "subcat-luc-02",
+    "name": "Large Claw Scoops",
+    "slug": "large-claw-scoops",
+    "description": "Large Scoops! A huge surprise mix of big, trendy claw clips to hold all your hair in style.",
+    "parentCategoryId": "cat-12",
+    "order": 1,
+    "active": true
   }
 ]
