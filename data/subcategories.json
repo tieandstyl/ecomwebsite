@@ -1150,5 +1150,14 @@
     "parentCategoryId": "cat-07",
     "order": 1,
     "active": true
+  },
+  {
+    "id": "subcat-luc-01",
+    "name": "Small Claw Scoops",
+    "slug": "small-claw-scoops",
+    "description": "Small Scoops! A fun mystery mix of cute mini claw clips and small hair accessories.",
+    "parentCategoryId": "cat-12",
+    "order": 1,
+    "active": true
   }
 ]

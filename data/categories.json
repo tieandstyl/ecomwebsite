@@ -68,5 +68,15 @@
     "parentId": null,
     "order": 1,
     "active": true
+  },
+  {
+    "id": "cat-12",
+    "name": "Lucky Claw Scoops",
+    "slug": "lucky-claw-scoops",
+    "description": "Lucky Scoops! Get a random mix of gorgeous claw clips and trendy hair accessories in one fun scoop.",
+    "image": "assets/categories/lucky-claw-scoops.jpeg",
+    "parentId": null,
+    "order": 1,
+    "active": true
   }
 ]
